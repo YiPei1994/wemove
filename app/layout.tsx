@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header/Header";
+import { ReactQueryClientProvider } from "@/store/reactQuery/ReactQueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,13 +17,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.className} bg-gradient-to-r from-cyan-500 to-blue-500 `}
-      >
-        <Header />
-        {children}
-      </body>
-    </html>
+    <ReactQueryClientProvider>
+      <html lang="en">
+        <body
+          className={`${inter.className} bg-gradient-to-r from-cyan-500 to-blue-500 	`}
+        >
+          <Header />
+          {children}
+        </body>
+      </html>
+    </ReactQueryClientProvider>
   );
 }
