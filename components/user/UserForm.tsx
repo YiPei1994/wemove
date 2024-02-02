@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserDataSchema, userDataSchema } from "@/lib/userType";
-import { useEffect, useState } from "react";
 
 function UserForm() {
   const {
@@ -13,29 +12,42 @@ function UserForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
     getValues,
+    setValue,
   } = useForm<UserDataSchema>({ resolver: zodResolver(userDataSchema) });
 
-  const userPal = getValues("pal");
-  const [userBmr, setUserBmr] = useState(0);
-
-  const userGender = getValues("gender");
-  const userAge = getValues("age");
-  const userHeight = getValues("height");
-  const userWeight = getValues("weight");
-  useEffect(() => {
-    function handleCalculateBMR() {
-      if (userGender === "male") {
-        const bmr =
-          88.362 + 13.397 * userWeight + 4.799 * userHeight - 5.677 * userAge;
-        setUserBmr(+bmr.toFixed(2));
-      } else {
-        const bmr =
-          447.593 + 9.247 * userWeight + 3.098 * userHeight - 4.33 * userAge;
-        setUserBmr(+bmr.toFixed(2));
-      }
+  function handleCalculateBMR(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    const userGender = getValues("gender");
+    const userAge = getValues("age");
+    const userHeight = getValues("height");
+    const userWeight = getValues("weight");
+    if (!userGender || !userAge || !userHeight || !userWeight) return;
+    if (userGender === "male") {
+      const bmr = +(
+        88.362 +
+        13.397 * userWeight +
+        4.799 * userHeight -
+        5.677 * userAge
+      ).toFixed();
+      setValue("bmr", bmr);
+    } else {
+      const bmr = +(
+        447.593 +
+        9.247 * userWeight +
+        3.098 * userHeight -
+        4.33 * userAge
+      ).toFixed();
+      setValue("bmr", bmr);
     }
-    handleCalculateBMR();
-  }, [userGender, userAge, userHeight, userWeight]);
+  }
+  function handleCalculateCalories(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    const userPal = getValues("pal");
+    const userBmr = getValues("bmr");
+    if (!userPal || !userBmr) return;
+    const totalCalories = +(userBmr * userPal).toFixed();
+    setValue("calories", totalCalories);
+  }
 
   function onSubmit(data: UserDataSchema) {
     console.log(data);
@@ -89,7 +101,7 @@ function UserForm() {
           <div>
             <div>
               <label htmlFor="bmr">BMR:</label>
-              <button>
+              <button type="button" onClick={handleCalculateBMR}>
                 <MdCalculate />
               </button>
             </div>
@@ -97,7 +109,7 @@ function UserForm() {
               id="bmr"
               type="number"
               placeholder="Calculate by clicking on icon..."
-              value={userBmr}
+              readOnly
               {...register("bmr")}
             />
             {errors.bmr && <p>{`${errors.bmr.message}`} </p>}
@@ -117,12 +129,15 @@ function UserForm() {
           <div>
             <div>
               <label htmlFor="calories">Total daily calories:</label>
-              <MdCalculate />
+              <button type="button" onClick={handleCalculateCalories}>
+                <MdCalculate />
+              </button>
             </div>
             <input
               id="calories"
               type="number"
               placeholder="Calculate by clicking on icon..."
+              readOnly
               {...register("calories")}
             />
             {errors.calories && <p>{`${errors.calories.message}`} </p>}
