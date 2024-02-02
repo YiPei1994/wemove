@@ -5,13 +5,37 @@ import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserDataSchema, userDataSchema } from "@/lib/userType";
+import { useEffect, useState } from "react";
 
 function UserForm() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    getValues,
   } = useForm<UserDataSchema>({ resolver: zodResolver(userDataSchema) });
+
+  const userPal = getValues("pal");
+  const [userBmr, setUserBmr] = useState(0);
+
+  const userGender = getValues("gender");
+  const userAge = getValues("age");
+  const userHeight = getValues("height");
+  const userWeight = getValues("weight");
+  useEffect(() => {
+    function handleCalculateBMR() {
+      if (userGender === "male") {
+        const bmr =
+          88.362 + 13.397 * userWeight + 4.799 * userHeight - 5.677 * userAge;
+        setUserBmr(+bmr.toFixed(2));
+      } else {
+        const bmr =
+          447.593 + 9.247 * userWeight + 3.098 * userHeight - 4.33 * userAge;
+        setUserBmr(+bmr.toFixed(2));
+      }
+    }
+    handleCalculateBMR();
+  }, [userGender, userAge, userHeight, userWeight]);
 
   function onSubmit(data: UserDataSchema) {
     console.log(data);
@@ -63,6 +87,22 @@ function UserForm() {
             {errors.weight && <p>{`${errors.weight.message}`} </p>}
           </div>
           <div>
+            <div>
+              <label htmlFor="bmr">BMR:</label>
+              <button>
+                <MdCalculate />
+              </button>
+            </div>
+            <input
+              id="bmr"
+              type="number"
+              placeholder="Calculate by clicking on icon..."
+              value={userBmr}
+              {...register("bmr")}
+            />
+            {errors.bmr && <p>{`${errors.bmr.message}`} </p>}
+          </div>
+          <div>
             <label htmlFor="pal">PAL: </label>
 
             <select id="pal" {...register("pal")}>
@@ -72,19 +112,6 @@ function UserForm() {
               <option value={2.2}>Highly active</option>
             </select>
             {errors.pal && <p>{`${errors.pal.message}`} </p>}
-          </div>
-          <div>
-            <div>
-              <label htmlFor="bmr">BMR:</label>
-              <MdCalculate />
-            </div>
-            <input
-              id="bmr"
-              type="number"
-              placeholder="Calculate by clicking on icon..."
-              {...register("bmr")}
-            />
-            {errors.bmr && <p>{`${errors.bmr.message}`} </p>}
           </div>
 
           <div>
