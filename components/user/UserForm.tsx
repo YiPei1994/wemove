@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserDataSchema, userDataSchema } from "@/lib/userType";
+import { useUpdateUserData } from "./useUpdateUserData";
+import { useDisplayUserForm } from "@/store/bearStore/displayUserFrom";
 
 function UserForm() {
   const {
@@ -14,6 +16,8 @@ function UserForm() {
     getValues,
     setValue,
   } = useForm<UserDataSchema>({ resolver: zodResolver(userDataSchema) });
+  const { updateData } = useUpdateUserData();
+  const { toggleUserForm } = useDisplayUserForm();
 
   function handleCalculateBMR(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
@@ -21,6 +25,7 @@ function UserForm() {
     const userAge = getValues("age");
     const userHeight = getValues("height");
     const userWeight = getValues("weight");
+
     if (!userGender || !userAge || !userHeight || !userWeight) return;
     if (userGender === "male") {
       const bmr = +(
@@ -40,6 +45,7 @@ function UserForm() {
       setValue("bmr", bmr);
     }
   }
+
   function handleCalculateCalories(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     const userPal = getValues("pal");
@@ -48,111 +54,124 @@ function UserForm() {
     const totalCalories = +(userBmr * userPal).toFixed();
     setValue("calories", totalCalories);
   }
-
   function onSubmit(data: UserDataSchema) {
-    console.log(data);
+    if (!data) return;
+    updateData(data);
+    toggleUserForm();
   }
+
   return (
-    <div className="bg-slate-50 my-4 h-auto w-[90%] mx-auto rounded-xl p-4 flex flex-col gap-6">
-      <header className="text-center w-auto">Lets set up your data!</header>
-      <div className="flex flex-col gap-4">
-        <p>Fill the form to get Calories!</p>
-        <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label htmlFor="gender">Gender: </label>
+    <>
+      <h2 className="text-3xl text-center">User form</h2>
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="gender">Gender: </label>
 
-            <select id="gender" {...register("gender")}>
-              <option value="">Select gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-            {errors.gender && <p>{`${errors.gender.message}`} </p>}
-          </div>
-          <div>
-            <label htmlFor="age">Age:</label>
-            <input
-              id="age"
-              type="number"
-              placeholder="insert your age..."
-              {...register("age")}
-            />
-            {errors.age && <p>{`${errors.age.message}`} </p>}
-          </div>
-          <div>
-            <label htmlFor="height">Height in cm:</label>
-            <input
-              id="height"
-              type="number"
-              placeholder="insert your height..."
-              {...register("height")}
-            />
-            {errors.height && <p>{`${errors.height.message}`} </p>}
-          </div>
-          <div>
-            <label htmlFor="weight">Weight in kilos:</label>
-            <input
-              id="weight"
-              type="number"
-              placeholder="insert your weight..."
-              {...register("weight")}
-            />
-            {errors.weight && <p>{`${errors.weight.message}`} </p>}
-          </div>
-          <div>
-            <div>
-              <label htmlFor="bmr">BMR:</label>
-              <button type="button" onClick={handleCalculateBMR}>
-                <MdCalculate />
-              </button>
-            </div>
-            <input
-              id="bmr"
-              type="number"
-              placeholder="Calculate by clicking on icon..."
-              readOnly
-              {...register("bmr")}
-            />
-            {errors.bmr && <p>{`${errors.bmr.message}`} </p>}
-          </div>
-          <div>
-            <label htmlFor="pal">PAL: </label>
+          <select className="p-2 w-full" id="gender" {...register("gender")}>
+            <option>Select your gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
 
-            <select id="pal" {...register("pal")}>
-              <option value="">Select activity level</option>
-              <option value={1.2}>Less active</option>
-              <option value={1.6}>Moderate active</option>
-              <option value={2.2}>Highly active</option>
-            </select>
-            {errors.pal && <p>{`${errors.pal.message}`} </p>}
-          </div>
-
-          <div>
-            <div>
-              <label htmlFor="calories">Total daily calories:</label>
-              <button type="button" onClick={handleCalculateCalories}>
-                <MdCalculate />
-              </button>
-            </div>
-            <input
-              id="calories"
-              type="number"
-              placeholder="Calculate by clicking on icon..."
-              readOnly
-              {...register("calories")}
-            />
-            {errors.calories && <p>{`${errors.calories.message}`} </p>}
-          </div>
-          <div>
-            <button disabled={isSubmitting} type="reset">
-              Reset
-            </button>
-            <button disabled={isSubmitting} type="submit">
-              Save data
+          {errors.gender && <p>{`${errors.gender.message}`} </p>}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="age">Age:</label>
+          <input
+            id="age"
+            type="number"
+            placeholder="insert your age..."
+            className="p-2 w-full"
+            {...register("age")}
+          />
+          {errors.age && <p>{`${errors.age.message}`} </p>}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="height">Height in cm:</label>
+          <input
+            id="height"
+            type="number"
+            placeholder="insert your height..."
+            className="p-2 w-full"
+            {...register("height")}
+          />
+          {errors.height && <p>{`${errors.height.message}`} </p>}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="weight">Weight in kilos:</label>
+          <input
+            id="weight"
+            type="number"
+            placeholder="insert your weight..."
+            className="p-2 w-full"
+            {...register("weight")}
+          />
+          {errors.weight && <p>{`${errors.weight.message}`} </p>}
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="flex justify-between">
+            <label htmlFor="bmr">BMR:</label>
+            <button type="button" onClick={handleCalculateBMR}>
+              <MdCalculate className="text-3xl" />
             </button>
           </div>
-        </form>
-      </div>
-    </div>
+          <input
+            id="bmr"
+            type="number"
+            placeholder="Calculate by clicking on icon..."
+            readOnly
+            className="p-2 w-full"
+            {...register("bmr")}
+          />
+          {errors.bmr && <p>{`${errors.bmr.message}`} </p>}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="pal">PAL: </label>
+
+          <select id="pal" {...register("pal")} className="p-2 w-full">
+            <option>select your activity level</option>
+            <option value={1.2}> Less active</option>
+            <option value={1.6}> Moderate active</option>
+            <option value={2.2}> Very active</option>
+          </select>
+          {errors.pal && <p>{`${errors.pal.message}`} </p>}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <div className="flex justify-between ">
+            <label htmlFor="calories">Total daily calories:</label>
+            <button type="button" onClick={handleCalculateCalories}>
+              <MdCalculate className="text-3xl" />
+            </button>
+          </div>
+          <input
+            id="calories"
+            type="number"
+            placeholder="Calculate by clicking on icon..."
+            readOnly
+            className="p-2 w-full"
+            {...register("calories")}
+          />
+          {errors.calories && <p>{`${errors.calories.message}`} </p>}
+        </div>
+        <div className="flex  gap-6 m-auto w-2/3 justify-between items-center">
+          <button
+            disabled={isSubmitting}
+            type="reset"
+            className="px-4 py-2 w-auto bg-blue-300 rounded-lg text-white"
+          >
+            Reset
+          </button>
+          <button
+            disabled={isSubmitting}
+            type="submit"
+            className="px-4 py-2 w-auto bg-blue-300 rounded-lg text-white"
+          >
+            Save data
+          </button>
+        </div>
+      </form>
+    </>
   );
 }
 

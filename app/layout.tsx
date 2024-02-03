@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header/Header";
 import { ReactQueryClientProvider } from "@/store/reactQuery/ReactQueryProvider";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,16 @@ export default function RootLayout({
         <body
           className={`${inter.className} bg-gradient-to-r from-cyan-500 to-blue-500 	`}
         >
+          <Toaster
+            toastOptions={{
+              className: "",
+              style: {
+                border: "1px solid #713200",
+                padding: "16px",
+                color: "#713200",
+              },
+            }}
+          />
           <Header />
           {children}
         </body>
