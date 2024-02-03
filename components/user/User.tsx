@@ -26,7 +26,16 @@ function User() {
             <p>Age: {age} </p>
             <p>Height: {height} </p>
             <p>Weight: {weight} </p>
-            <p>Psychical activity level: {pal} </p>
+            <p>
+              Psychical activity level:{" "}
+              {pal === 1.2
+                ? "Less active"
+                : pal === 1.6
+                ? "Moderate active"
+                : pal === 2.2
+                ? "Very active"
+                : ""}{" "}
+            </p>
             <p>Base metabolic rate: {bmr} kcal </p>
             <p>Total calories per day: {calories} kcal </p>
           </div>
