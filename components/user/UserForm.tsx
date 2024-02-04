@@ -7,7 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { UserDataSchema, userDataSchema } from "@/lib/userType";
 import { useUpdateUserData } from "./useUpdateUserData";
 import { useDisplayUserForm } from "@/store/bearStore/displayUserFrom";
-
 function UserForm() {
   const {
     register,
@@ -18,7 +17,6 @@ function UserForm() {
   } = useForm<UserDataSchema>({ resolver: zodResolver(userDataSchema) });
   const { updateData } = useUpdateUserData();
   const { toggleUserForm } = useDisplayUserForm();
-
   function handleCalculateBMR(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     const userGender = getValues("gender");
@@ -73,7 +71,9 @@ function UserForm() {
             <option value="female">Female</option>
           </select>
 
-          {errors.gender && <p>{`${errors.gender.message}`} </p>}
+          {errors.gender && (
+            <p className="text-red-500">{`${errors.gender.message}`} </p>
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="age">Age:</label>
@@ -84,7 +84,9 @@ function UserForm() {
             className="p-2 w-full"
             {...register("age")}
           />
-          {errors.age && <p>{`${errors.age.message}`} </p>}
+          {errors.age && (
+            <p className="text-red-500">{`${errors.age.message}`} </p>
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="height">Height in cm:</label>
@@ -95,7 +97,9 @@ function UserForm() {
             className="p-2 w-full"
             {...register("height")}
           />
-          {errors.height && <p>{`${errors.height.message}`} </p>}
+          {errors.height && (
+            <p className="text-red-500">{`${errors.height.message}`} </p>
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="weight">Weight in kilos:</label>
@@ -106,7 +110,9 @@ function UserForm() {
             className="p-2 w-full"
             {...register("weight")}
           />
-          {errors.weight && <p>{`${errors.weight.message}`} </p>}
+          {errors.weight && (
+            <p className="text-red-500">{`${errors.weight.message}`} </p>
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex justify-between">
@@ -123,7 +129,9 @@ function UserForm() {
             className="p-2 w-full"
             {...register("bmr")}
           />
-          {errors.bmr && <p>{`${errors.bmr.message}`} </p>}
+          {errors.bmr && (
+            <p className="text-red-500">{`${errors.bmr.message}`} </p>
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="pal">PAL: </label>
@@ -134,7 +142,9 @@ function UserForm() {
             <option value={1.6}> Moderate active</option>
             <option value={2.2}> Very active</option>
           </select>
-          {errors.pal && <p>{`${errors.pal.message}`} </p>}
+          {errors.pal && (
+            <p className="text-red-500">{`${errors.pal.message}`} </p>
+          )}
         </div>
 
         <div className="flex flex-col gap-2">
@@ -152,20 +162,22 @@ function UserForm() {
             className="p-2 w-full"
             {...register("calories")}
           />
-          {errors.calories && <p>{`${errors.calories.message}`} </p>}
+          {errors.calories && (
+            <p className="text-red-500">{`${errors.calories.message}`} </p>
+          )}
         </div>
         <div className="flex  gap-6 m-auto w-2/3 justify-between items-center">
           <button
             disabled={isSubmitting}
             type="reset"
-            className="px-4 py-2 w-auto bg-blue-300 rounded-lg text-white"
+            className="px-4 py-2 w-auto bg-blue-500/50 rounded-lg text-white"
           >
             Reset
           </button>
           <button
             disabled={isSubmitting}
             type="submit"
-            className="px-4 py-2 w-auto bg-blue-300 rounded-lg text-white"
+            className="px-4 py-2 w-auto bg-blue-500/50 rounded-lg text-white"
           >
             Save data
           </button>
