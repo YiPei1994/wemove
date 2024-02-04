@@ -1,11 +1,11 @@
 import { UserDataSchema } from "@/lib/userType";
 import supabase from "./supabase";
 
-export const getUserData = async () => {
+export const getUserData = async (id: string) => {
   const { data, error } = await supabase
     .from("userData")
     .select()
-    .eq("id", 1)
+    .eq("userId", id)
     .single();
 
   if (error) {
@@ -14,32 +14,38 @@ export const getUserData = async () => {
 
   return data;
 };
-
-export const updateUserStat = async (newData: UserDataSchema) => {
-  const { data, error } = await supabase
+export const upsertUserStat = async (newData: UserDataSchema, id: string) => {
+  // Check if a row with the given userId already exists
+  const existingRow = await supabase
     .from("userData")
-    .update({ ...newData })
-    .eq("id", 1)
-    .select();
+    .select()
+    .eq("userId", id)
+    .single();
 
-  if (error) {
-    throw new Error("Updating userData failed.");
+  if (existingRow.data) {
+    // If a row exists, perform an update
+    const { data, error } = await supabase
+      .from("userData")
+      .update({ ...newData })
+      .eq("userId", id)
+      .select();
+
+    if (error) {
+      throw new Error("Updating userData failed.");
+    }
+
+    return data;
+  } else {
+    // If no row exists, perform an insert
+    const { data, error } = await supabase
+      .from("userData")
+      .insert([{ ...newData, userId: id }])
+      .select();
+
+    if (error) {
+      throw new Error("Adding userData failed.");
+    }
+
+    return data;
   }
-
-  return data;
 };
-
-export async function getCurrentUser() {
-  const { data: sesssion } = await supabase.auth.getSession();
-  if (!sesssion.session) return null;
-
-  const { data, error } = await supabase.auth.getUser();
-
-  if (error) throw new Error(error.message);
-  return data?.user;
-}
-
-export async function signOut() {
-  const { error } = await supabase.auth.signOut();
-  if (error) throw new Error(error.message);
-}

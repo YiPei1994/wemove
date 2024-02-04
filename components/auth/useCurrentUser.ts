@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/servises/apiUser";
+import { getCurrentUser } from "@/servises/apiUserAuth";
 import { useQuery } from "@tanstack/react-query";
 
 export function useCurrentUser() {

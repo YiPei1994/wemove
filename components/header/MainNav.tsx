@@ -6,13 +6,14 @@ import React from "react";
 import { FaUser } from "react-icons/fa6";
 import { useCurrentUser } from "../auth/useCurrentUser";
 import { IoIosLogOut } from "react-icons/io";
-import { useLogOut } from "../user/useLogout";
+import { useLogOut } from "../auth/useLogout";
 
 function MainNav() {
   const path = usePathname();
   const { isAutenticated } = useCurrentUser();
   const { logOut } = useLogOut();
   const route = useRouter();
+
   function handleLogout() {
     logOut();
     route.push("/login");

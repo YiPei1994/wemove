@@ -15,7 +15,9 @@ function User() {
         <FaUserDoctor className="text-5xl" />
       </div>
       {!userData && (
-        <p>You have no data yet, head over to form to get your data.</p>
+        <p className="m-4">
+          You have no data yet, head over to form to get your data.
+        </p>
       )}
       {userData && isLoading && <p>Loading your data....</p>}
       {userData && (

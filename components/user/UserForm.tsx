@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { UserDataSchema, userDataSchema } from "@/lib/userType";
 import { useUpdateUserData } from "./useUpdateUserData";
 import { useDisplayUserForm } from "@/store/bearStore/displayUserFrom";
+import { useCurrentUser } from "../auth/useCurrentUser";
 function UserForm() {
   const {
     register,
@@ -15,8 +16,10 @@ function UserForm() {
     getValues,
     setValue,
   } = useForm<UserDataSchema>({ resolver: zodResolver(userDataSchema) });
-  const { updateData } = useUpdateUserData();
+  const { upsertData } = useUpdateUserData();
   const { toggleUserForm } = useDisplayUserForm();
+  const { user } = useCurrentUser();
+
   function handleCalculateBMR(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     const userGender = getValues("gender");
@@ -54,8 +57,16 @@ function UserForm() {
   }
   function onSubmit(data: UserDataSchema) {
     if (!data) return;
-    updateData(data);
-    toggleUserForm();
+
+    const userId = user?.id;
+
+    if (userId) {
+      upsertData({ newData: data, id: userId });
+      toggleUserForm();
+    } else {
+      console.error("User ID is undefined");
+      // Handle the case where user ID is undefined, e.g., show an error message
+    }
   }
 
   return (

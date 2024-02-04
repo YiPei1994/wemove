@@ -1,4 +1,4 @@
-import { signOut } from "@/servises/apiUser";
+import { signOut } from "@/servises/apiUserAuth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
