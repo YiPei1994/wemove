@@ -3,6 +3,7 @@
 import { FaUserDoctor } from "react-icons/fa6";
 import { useReadUser } from "./useReadUser";
 import { useDisplayUserForm } from "@/store/bearStore/displayUserFrom";
+import Spinner from "../Spinner";
 
 function User() {
   const { userData, isLoading } = useReadUser();
@@ -19,7 +20,7 @@ function User() {
           You have no data yet, head over to form to get your data.
         </p>
       )}
-      {userData && isLoading && <p>Loading your data....</p>}
+      {userData && isLoading && <Spinner />}
       {userData && (
         <div className="flex justify-center items-center flex-col my-4  w-full ">
           <h2>Your last updated stats:</h2>
