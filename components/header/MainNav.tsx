@@ -29,9 +29,9 @@ function MainNav() {
       <li>
         <Link
           className={path.startsWith("/indoor") ? "text-blue-400" : ""}
-          href="/indoor"
+          href="/gym"
         >
-          Indoor
+          Gym
         </Link>
       </li>
       <li>
