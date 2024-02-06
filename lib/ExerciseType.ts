@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export type ExerciseType = {
   exercise_id: number;
   exercise_name: string;
@@ -13,4 +15,9 @@ export type ExerciseDataType = {
   performance: number;
   powerLevel: number;
   unit: string;
+};
+
+export type NewExercise = {
+  exercise_name: string;
+  slug: string;
 };

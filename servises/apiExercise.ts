@@ -1,8 +1,12 @@
-import { ExerciseDataType, ExerciseType } from "@/lib/ExerciseType";
+import {
+  ExerciseDataType,
+  ExerciseType,
+  NewExercise,
+} from "@/lib/ExerciseType";
 import supabase from "./supabase";
 
-export const getAllExercisesOfType = async (type: string) => {
-  const { data, error } = await supabase.from(type).select("*");
+export const getAllExercisesOfType = async (query: string) => {
+  const { data, error } = await supabase.from(query).select("*");
 
   if (error) {
     throw new Error(error.message || "couldnt fetch this type");
@@ -32,5 +36,30 @@ export const getExactExerciseData = async (
   } catch (e: any) {
     console.error("Error in getExactExerciseData:", e.message);
     throw e;
+  }
+};
+
+export const addNewExercise = async (
+  newExercise: NewExercise,
+  query: string
+) => {
+  const existingRow = await supabase
+    .from(query)
+    .select()
+    .eq("exercise_name", newExercise.exercise_name)
+    .single();
+
+  if (!existingRow) {
+    const { data, error } = await supabase
+      .from(query)
+      .insert([{ ...newExercise }])
+      .select();
+
+    if (error) {
+      throw new Error(error.message || "Could not create new exercise");
+    }
+    return data;
+  } else {
+    throw new Error("Exercise already exists.");
   }
 };
