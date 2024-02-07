@@ -1,6 +1,8 @@
 "use client";
 
+import { useAddExercise } from "@/components/exercises/useAddExercise";
 import { NewExercise } from "@/lib/ExerciseType";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
@@ -14,15 +16,25 @@ function NewExerciseForm({ params }: NewExerciseFormProps) {
   const query = params.typeslug;
   const [exerciseName, setExerciseName] = useState("");
   const router = useRouter();
+  const { addExercise } = useAddExercise();
+  const queryclient = useQueryClient();
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!exerciseName) return;
     const newExercise: NewExercise = {
-      exercise_name: exerciseName,
+      exercise_name: exerciseName.replaceAll(" ", "_").toLowerCase(),
       slug: `${query}-exercise-${exerciseName.replaceAll(" ", "")}`,
     };
 
-    console.log(newExercise);
+    addExercise(
+      { newExercise, query },
+      {
+        onSuccess: () => {
+          router.push(`/gym/${query}`);
+          queryclient.invalidateQueries({ queryKey: [query] });
+        },
+      }
+    );
   }
   return (
     <div className="bg-slate-50 my-4 h-auto w-[90%] mx-auto rounded-xl p-4 flex flex-col gap-6">

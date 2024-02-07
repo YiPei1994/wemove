@@ -33,10 +33,10 @@ const GymExercisepage = ({ params }: pageProps) => {
         {exercises?.map((exercise) => (
           <div
             key={exercise.exercise_id}
-            className="px-4 py-2 text-white bg-blue-600/90 rounded-lg"
+            className="px-4 py-2 text-white bg-blue-600/90 rounded-lg uppercase"
           >
             <Link href={`/gym/${query}/${exercise.slug}`}>
-              {exercise.exercise_name}{" "}
+              {exercise.exercise_name.replaceAll("_", " ")}{" "}
             </Link>{" "}
           </div>
         ))}
@@ -48,9 +48,12 @@ const GymExercisepage = ({ params }: pageProps) => {
         >
           Back
         </button>
-        <button className="px-4 py-2 text-white bg-green-600/90 rounded-lg">
+        <Link
+          href={`/gym/${query}/newExerciseForm`}
+          className="px-4 py-2 text-white bg-green-600/90 rounded-lg"
+        >
           Add
-        </button>
+        </Link>
       </div>
     </div>
   );

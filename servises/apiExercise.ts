@@ -43,13 +43,15 @@ export const addNewExercise = async (
   newExercise: NewExercise,
   query: string
 ) => {
+  console.log(newExercise, query);
   const existingRow = await supabase
     .from(query)
     .select()
     .eq("exercise_name", newExercise.exercise_name)
     .single();
 
-  if (!existingRow) {
+  console.log(existingRow);
+  if (!existingRow.data) {
     const { data, error } = await supabase
       .from(query)
       .insert([{ ...newExercise }])
