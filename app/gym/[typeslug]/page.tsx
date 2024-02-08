@@ -31,14 +31,13 @@ const GymExercisepage = ({ params }: pageProps) => {
       </header>
       <div className="flex flex-wrap gap-4">
         {exercises?.map((exercise) => (
-          <div
+          <Link
             key={exercise.exercise_id}
-            className="px-4 py-2 text-white bg-blue-600/90 rounded-lg uppercase"
+            className="px-4 py-2 text-white bg-blue-600/90 rounded-lg uppercase w-[90%] m-auto"
+            href={`/gym/${query}/${exercise.slug}`}
           >
-            <Link href={`/gym/${query}/${exercise.slug}`}>
-              {exercise.exercise_name.replaceAll("_", " ")}{" "}
-            </Link>{" "}
-          </div>
+            {exercise.exercise_name.replaceAll("_", " ")}{" "}
+          </Link>
         ))}
       </div>
       <div className="w-4/5 justify-between items-center flex m-auto">

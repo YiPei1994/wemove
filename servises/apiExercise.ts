@@ -15,26 +15,56 @@ export const getAllExercisesOfType = async (query: string) => {
   return data as ExerciseType[];
 };
 
-export const getExactExerciseData = async (
+export const getLastExerciseData = async (
   userId: string | undefined,
-  exercise: string
+  exercise: string,
+  exerciseData: string
 ) => {
   try {
-    console.log(userId, exercise);
     const { data, error } = await supabase
-      .from("chestData")
+      .from(exerciseData)
       .select()
       .eq("userId", userId)
-      .eq("exercise", exercise);
+      .eq("exercise", exercise)
+      .order("tracking_id", { ascending: false })
+      .limit(1);
 
     if (error) {
-      throw new Error(error.message || "Couldn't find exercise record.");
+      throw new Error(error.message || "Couldn't find last exercise record.");
     }
-    console.log(data);
+
     const lastData: ExerciseDataType = data[0];
+
     return lastData;
   } catch (e: any) {
     console.error("Error in getExactExerciseData:", e.message);
+    throw e;
+  }
+};
+
+export const getBestExerciseData = async (
+  userId: string | undefined,
+  exercise: string,
+  exerciseData: string
+) => {
+  try {
+    const { data, error } = await supabase
+      .from(exerciseData)
+      .select()
+      .eq("userId", userId)
+      .eq("exercise", exercise)
+      .order("performance", { ascending: false })
+      .limit(1);
+
+    if (error) {
+      throw new Error(error.message || "Couldn't find best exercise record.");
+    }
+
+    const bestData: ExerciseDataType = data[0];
+
+    return bestData;
+  } catch (e: any) {
+    console.error("Error in getBestExerciseData:", e.message);
     throw e;
   }
 };

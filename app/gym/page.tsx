@@ -8,19 +8,19 @@ function GymPage() {
       </header>
       <div className="flex flex-col gap-4 items-center">
         <Link
-          className="px-6 py-2 rounded-lg text-white bg-green-600/90 w-auto text-center text-xl"
+          className="px-6 py-2 rounded-lg text-white bg-green-600/90 w-4/5 text-center text-xl"
           href="/gym/chest"
         >
           Chest muscles
         </Link>
         <Link
-          className="px-6 py-2 rounded-lg text-white bg-green-600/90 w-auto text-center text-xl"
+          className="px-6 py-2 rounded-lg text-white bg-green-600/90 w-4/5 text-center text-xl"
           href="/gym/back"
         >
           Back muscles
         </Link>
         <Link
-          className="px-6 py-2 rounded-lg text-white bg-green-600/90 w-auto text-center text-xl"
+          className="px-6 py-2 rounded-lg text-white bg-green-600/90 w-4/5 text-center text-xl"
           href="/gym/legs"
         >
           Legs muscles

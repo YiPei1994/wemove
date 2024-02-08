@@ -1,14 +1,20 @@
 "use client";
 
-// Import the necessary dependencies
 import Spinner from "@/components/Spinner";
 import { useCurrentUser } from "@/components/auth/useCurrentUser";
-import { getExactExerciseData } from "@/servises/apiExercise";
+import ExerciseDetailBlock from "@/components/exercises/ExerciseDetail";
+import ExerciseDetailForm from "@/components/exercises/ExerciseDetailForm";
+
+import {
+  getBestExerciseData,
+  getLastExerciseData,
+} from "@/servises/apiExercise";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 
-import { useRouter } from "next/navigation"; // Corrected the import path
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-// Define the type for the pageProps
 type PageProps = {
   params: {
     typeslug: string;
@@ -16,49 +22,44 @@ type PageProps = {
   };
 };
 
-// Define the ExerciseDetail component
 const ExerciseDetail = ({ params }: PageProps) => {
-  // Destructure necessary values using the useCurrentUser hook
   const { user } = useCurrentUser();
   const router = useRouter();
   const { typeslug, typedetailslug } = params;
   const userId = user?.id;
+  const exerciseData = `${typeslug}Data`;
+  useState();
 
-  // Use the useQuery hook to fetch exerciseData
-  const { data: exerciseData, isLoading } = useQuery({
-    queryKey: [`${typeslug}Data`, typedetailslug, userId],
-    queryFn: () => getExactExerciseData(userId, typedetailslug),
+  const { data: lastExerciseData, isLoading: isLoadingLast } = useQuery({
+    queryKey: [exerciseData, typedetailslug, userId, "last"],
+    queryFn: () => getLastExerciseData(userId, typedetailslug, exerciseData),
   });
 
-  // Display a spinner while loading
+  const { data: bestExerciseData, isLoading: isLoadingBest } = useQuery({
+    queryKey: [exerciseData, typedetailslug, userId, "best"],
+    queryFn: () => getBestExerciseData(userId, typedetailslug, exerciseData),
+  });
+
+  const isLoading = isLoadingLast || isLoadingBest;
+
   if (isLoading) return <Spinner />;
 
-  // Destructure the exerciseData only if it exists
-  let date, exercise, performance, powerLevel, unit; // Declare variables outside the if block for later use
-  if (exerciseData) {
-    ({ date, exercise, performance, powerLevel, unit } = exerciseData);
-  }
-
-  // Return the JSX for the ExerciseDetail component
   return (
     <div className="bg-slate-50 my-6 h-auto w-[90%] mx-auto rounded-xl p-4 flex flex-col gap-6">
-      <h2 className="text-2xl text-center">Your peak performance</h2>
-      {exerciseData ? (
-        <div className="flex flex-col gap-2 justify-center items-center">
-          <p>Name: {exercise?.replaceAll("-", " ")} </p>
-          <div className="flex justify-between w-full">
-            <p>
-              Date: {date?.split("-").reverse().join().replaceAll(",", ".")}{" "}
-            </p>
-            <p>Power Level: {powerLevel} </p>
-          </div>
-          <div className="flex justify-between w-full">
-            <p>Performance: {performance} </p> <p>Unit: {unit} </p>
-          </div>
-        </div>
-      ) : (
-        <p>No record for this exercise from you yet.</p>
-      )}
+      <h2 className="text-2xl text-center">Your {typeslug} performance</h2>
+      <div>
+        <h4>Your last exercise recod:</h4>
+        <ExerciseDetailBlock exerciseData={lastExerciseData} />
+      </div>
+      <div>
+        <h4>Your best exercise recod:</h4>
+        <ExerciseDetailBlock exerciseData={bestExerciseData} />
+      </div>
+      <ExerciseDetailForm
+        type={typeslug}
+        slug={typedetailslug}
+        userId={userId}
+      />
       <div className="w-4/5 justify-between items-center flex m-auto">
         <button
           className="px-4 py-2 text-white bg-red-600 rounded-lg"
@@ -67,12 +68,11 @@ const ExerciseDetail = ({ params }: PageProps) => {
           Back
         </button>
         <button className="px-4 py-2 text-white bg-green-400 rounded-lg">
-          Update
+          Add
         </button>
       </div>
     </div>
   );
 };
 
-// Export the ExerciseDetail component as the default export
 export default ExerciseDetail;
