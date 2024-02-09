@@ -1,4 +1,5 @@
 import {
+  ExerciseDataFormType,
   ExerciseDataType,
   ExerciseType,
   NewExercise,
@@ -53,7 +54,7 @@ export const getBestExerciseData = async (
       .select()
       .eq("userId", userId)
       .eq("exercise", exercise)
-      .order("performance", { ascending: false })
+      .order("avg_performance", { ascending: false })
       .limit(1);
 
     if (error) {
@@ -94,4 +95,20 @@ export const addNewExercise = async (
   } else {
     throw new Error("Exercise already exists.");
   }
+};
+
+export const addNewExerciseData = async (
+  newExerciseData: ExerciseDataFormType,
+  type: string
+) => {
+  console.log(type);
+  const { data, error } = await supabase
+    .from(type)
+    .insert([{ ...newExerciseData }])
+    .select();
+
+  if (error) {
+    throw new Error(error.message || "Could not add new Exercise Data");
+  }
+  return data;
 };

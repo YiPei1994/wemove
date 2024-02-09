@@ -12,12 +12,19 @@ export type ExerciseDataType = {
   userId: string;
   exercise: string;
   date: string;
-  performance: number;
-  powerLevel: number;
-  unit: string;
+  avg_performance: string;
+  avg_reps: number;
 };
 
 export type NewExercise = {
   exercise_name: string;
   slug: string;
+};
+
+export type ExerciseDataFormType = {
+  userId: string;
+  exercise: string;
+  date: string;
+  avg_performance: number;
+  avg_reps: number;
 };
