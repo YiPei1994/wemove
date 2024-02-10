@@ -22,7 +22,7 @@ export type NewExercise = {
 };
 
 export type ExerciseDataFormType = {
-  userId: string;
+  userId: string | undefined;
   exercise: string;
   date: string;
   avg_performance: number;

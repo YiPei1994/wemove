@@ -93,53 +93,50 @@ function ExerciseDetailForm({
     );
   }
   return (
-    <>
-      <header>{slug}</header>
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-2">
-          <div className="flex justify-between">
-            <label htmlFor="powerLevel">Performances: </label>
-            <button type="button" onClick={handleAddSet}>
-              <CiSquarePlus className="text-3xl" />
-            </button>
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+      <div className="flex flex-col gap-2">
+        <div className="flex justify-between">
+          <label htmlFor="powerLevel">Performances: </label>
+          <button type="button" onClick={handleAddSet}>
+            <CiSquarePlus className="text-3xl" />
+          </button>
+        </div>
+        {sets.map((set, i) => (
+          <div key={i} className="flex gap-2 items-center justify-between">
+            <label htmlFor={`set_${i}`}>{`Set ${i + 1}`}: </label>
+            <input
+              id={`set_${i}`}
+              type="number"
+              className="p-2 w-2/4"
+              placeholder={`weight`}
+              onBlur={(e) =>
+                setPerformances([...performances, +e.target.value])
+              }
+            />
+            x
+            <input
+              id={`set_${i}`}
+              type="number"
+              className="p-2 w-1/4"
+              placeholder={`rep`}
+              onBlur={(e) => setReps([...reps, +e.target.value])}
+            />
           </div>
-          {sets.map((set, i) => (
-            <div key={i} className="flex gap-2 items-center justify-between">
-              <label htmlFor={`set_${i}`}>{`Set ${i + 1}`}: </label>
-              <input
-                id={`set_${i}`}
-                type="number"
-                className="p-2 w-2/4"
-                placeholder={`weight`}
-                onBlur={(e) =>
-                  setPerformances([...performances, +e.target.value])
-                }
-              />
-              x
-              <input
-                id={`set_${i}`}
-                type="number"
-                className="p-2 w-1/4"
-                placeholder={`rep`}
-                onBlur={(e) => setReps([...reps, +e.target.value])}
-              />
-            </div>
-          ))}
-        </div>
+        ))}
+      </div>
 
-        <div className="w-4/5 justify-between items-center flex m-auto">
-          <button
-            className="px-4 py-2 text-white bg-red-600 rounded-lg"
-            onClick={() => open(false)}
-          >
-            Close
-          </button>
-          <button className="px-4 py-2 text-white bg-green-400 rounded-lg">
-            Add
-          </button>
-        </div>
-      </form>
-    </>
+      <div className="w-4/5 justify-between items-center flex m-auto">
+        <button
+          className="px-4 py-2 text-white bg-red-600 rounded-lg"
+          onClick={() => open(false)}
+        >
+          Close
+        </button>
+        <button className="px-4 py-2 text-white bg-green-400 rounded-lg">
+          Add
+        </button>
+      </div>
+    </form>
   );
 }
 
