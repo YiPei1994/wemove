@@ -74,14 +74,12 @@ export const addNewExercise = async (
   newExercise: NewExercise,
   query: string
 ) => {
-  console.log(newExercise, query);
   const existingRow = await supabase
     .from(query)
     .select()
     .eq("exercise_name", newExercise.exercise_name)
     .single();
 
-  console.log(existingRow);
   if (!existingRow.data) {
     const { data, error } = await supabase
       .from(query)
@@ -101,7 +99,6 @@ export const addNewExerciseData = async (
   newExerciseData: ExerciseDataFormType,
   type: string
 ) => {
-  console.log(type);
   const { data, error } = await supabase
     .from(type)
     .insert([{ ...newExerciseData }])

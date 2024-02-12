@@ -52,11 +52,11 @@ const ExerciseDetail = ({ params }: PageProps) => {
       </h2>
       <div>
         <h4>Your last exercise recod:</h4>
-        <ExerciseDetailBlock exerciseData={lastExerciseData} />
+        <ExerciseDetailBlock exerciseData={lastExerciseData} type={typeslug} />
       </div>
       <div>
         <h4>Your best exercise recod:</h4>
-        <ExerciseDetailBlock exerciseData={bestExerciseData} />
+        <ExerciseDetailBlock exerciseData={bestExerciseData} type={typeslug} />
       </div>
       {openFrom && (
         <ExerciseDetailForm

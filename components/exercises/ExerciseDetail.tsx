@@ -2,8 +2,9 @@ import { ExerciseDataType } from "@/lib/ExerciseType";
 import React from "react";
 type ExerciseDetailProps = {
   exerciseData: ExerciseDataType | undefined;
+  type: string;
 };
-function ExerciseDetailBlock({ exerciseData }: ExerciseDetailProps) {
+function ExerciseDetailBlock({ exerciseData, type }: ExerciseDetailProps) {
   if (!exerciseData) return <p>You have no data on this yet.</p>;
   const { date, avg_reps, avg_performance } = exerciseData;
 
@@ -16,7 +17,9 @@ function ExerciseDetailBlock({ exerciseData }: ExerciseDetailProps) {
         <h4>Performance: </h4>
 
         <div className="flex gap-4 items-center">
-          <span>Average of {avg_reps} reps </span>
+          <span>
+            Average of {avg_reps} {type === "cardio" ? "mins" : "reps"}{" "}
+          </span>
           <span>with {avg_performance} kgs </span>
         </div>
       </div>

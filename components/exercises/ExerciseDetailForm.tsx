@@ -24,6 +24,8 @@ const defaultSets = [
   { set: 0, rep: 0 },
   { set: 0, rep: 0 },
 ];
+
+const defaultCardioSets = [{ set: 0, rep: 0 }];
 const set = {
   set: 0,
   rep: 0,
@@ -34,7 +36,9 @@ function ExerciseDetailForm({
   open,
   type,
 }: ExerciseDetailFromProps) {
-  const [sets, setSets] = useState<Set[]>(defaultSets);
+  const [sets, setSets] = useState<Set[]>(
+    type === "cardio" ? defaultCardioSets : defaultSets
+  );
   const [performances, setPerformances] = useState<number[]>([]);
   const [reps, setReps] = useState<number[]>([]);
   const { addExerciseData } = useAddExerciseData();
@@ -80,8 +84,7 @@ function ExerciseDetailForm({
       avg_performance: avgPerform,
       avg_reps: avgReps,
     };
-    console.log(newExerciseData);
-    console.log(dataTable);
+
     addExerciseData(
       { newExerciseData, dataTable },
       {
@@ -97,32 +100,57 @@ function ExerciseDetailForm({
       <div className="flex flex-col gap-2">
         <div className="flex justify-between">
           <label htmlFor="powerLevel">Performances: </label>
-          <button type="button" onClick={handleAddSet}>
-            <CiSquarePlus className="text-3xl" />
-          </button>
+          {type !== "cardio" && (
+            <button type="button" onClick={handleAddSet}>
+              <CiSquarePlus className="text-3xl" />
+            </button>
+          )}
         </div>
-        {sets.map((set, i) => (
-          <div key={i} className="flex gap-2 items-center justify-between">
-            <label htmlFor={`set_${i}`}>{`Set ${i + 1}`}: </label>
-            <input
-              id={`set_${i}`}
-              type="number"
-              className="p-2 w-2/4"
-              placeholder={`weight`}
-              onBlur={(e) =>
-                setPerformances([...performances, +e.target.value])
-              }
-            />
-            x
-            <input
-              id={`set_${i}`}
-              type="number"
-              className="p-2 w-1/4"
-              placeholder={`rep`}
-              onBlur={(e) => setReps([...reps, +e.target.value])}
-            />
-          </div>
-        ))}
+        {type === "cardio" || type === "core"
+          ? sets.map((set, i) => (
+              <div key={i} className="flex gap-2 items-center justify-between">
+                <label htmlFor={`set_${i}`}>{`Set ${i + 1}`}: </label>
+                <input
+                  id={`set_${i}`}
+                  type="number"
+                  className="p-2 w-2/4"
+                  placeholder={`body weight`}
+                  onBlur={(e) =>
+                    setPerformances([...performances, +e.target.value])
+                  }
+                />
+                x
+                <input
+                  id={`set_${i}`}
+                  type="number"
+                  className="p-2 w-1/4"
+                  placeholder="mins"
+                  onBlur={(e) => setReps([...reps, +e.target.value])}
+                />
+              </div>
+            ))
+          : sets.map((set, i) => (
+              <div key={i} className="flex gap-2 items-center justify-between">
+                <label htmlFor={`set_${i}`}>{`Set ${i + 1}`}: </label>
+                <input
+                  id={`set_${i}`}
+                  type="number"
+                  className="p-2 w-2/4"
+                  placeholder={`weight`}
+                  onBlur={(e) =>
+                    setPerformances([...performances, +e.target.value])
+                  }
+                />
+                x
+                <input
+                  id={`set_${i}`}
+                  type="number"
+                  className="p-2 w-1/4"
+                  placeholder="unit"
+                  onBlur={(e) => setReps([...reps, +e.target.value])}
+                />
+              </div>
+            ))}
       </div>
 
       <div className="w-4/5 justify-between items-center flex m-auto">
