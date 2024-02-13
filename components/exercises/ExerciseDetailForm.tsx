@@ -1,11 +1,11 @@
 "use client";
 
 import { ExerciseDataFormType } from "@/lib/ExerciseType";
-import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 import { CiSquarePlus } from "react-icons/ci";
 import { useAddExerciseData } from "./useAddExerciseData";
 import { useQueryClient } from "@tanstack/react-query";
+import { BiMinusCircle } from "react-icons/bi";
 
 type ExerciseDetailFromProps = {
   type: string;
@@ -15,18 +15,21 @@ type ExerciseDetailFromProps = {
 };
 
 type Set = {
+  id: number;
   set: number;
   rep: number;
 };
 
 const defaultSets = [
-  { set: 0, rep: 0 },
-  { set: 0, rep: 0 },
-  { set: 0, rep: 0 },
+  { id: Math.random(), set: 0, rep: 0 },
+  { id: Math.random(), set: 0, rep: 0 },
+  { id: Math.random(), set: 0, rep: 0 },
 ];
 
-const defaultCardioSets = [{ set: 0, rep: 0 }];
+const defaultCardioSets = [{ id: Math.random(), set: 0, rep: 0 }];
+
 const set = {
+  id: Math.random(),
   set: 0,
   rep: 0,
 };
@@ -39,8 +42,7 @@ function ExerciseDetailForm({
   const [sets, setSets] = useState<Set[]>(
     type === "cardio" ? defaultCardioSets : defaultSets
   );
-  const [performances, setPerformances] = useState<number[]>([]);
-  const [reps, setReps] = useState<number[]>([]);
+
   const { addExerciseData } = useAddExerciseData();
   const dataTable = `${type}Data`;
   const queryClient = useQueryClient();
@@ -50,18 +52,62 @@ function ExerciseDetailForm({
     setSets([...sets, set]);
   }
 
+  function handleUpdatePerformance(
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: number
+  ) {
+    e.preventDefault();
+
+    console.log(id);
+    const newValue = parseFloat(e.target.value);
+    if (isNaN(newValue)) return;
+
+    const updatedSets = sets.map((set) => {
+      if (set.id === id) {
+        return { ...set, set: newValue };
+      }
+      return set;
+    });
+
+    setSets(updatedSets);
+  }
+
+  function handleUpdateReps(
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: number
+  ) {
+    e.preventDefault();
+
+    const newValue = parseFloat(e.target.value);
+    if (isNaN(newValue)) return;
+
+    const updatedSets = sets.map((set) => {
+      if (set.id === id) {
+        return { ...set, rep: newValue };
+      }
+      return set;
+    });
+
+    setSets(updatedSets);
+  }
+
+  function handleDeleteSet(e: React.MouseEvent<HTMLButtonElement>, id: number) {
+    e.preventDefault();
+    setSets(sets.filter((set) => set.id !== id));
+  }
+
   function handleCalculateAvePerformance() {
-    const sumOfPerformances = performances.reduce((acc, cur) => acc + cur, 0);
+    const sumOfPerformances = sets.reduce((acc, cur) => acc + cur.set, 0);
     const averagePerformancePerSet = Math.floor(
-      sumOfPerformances / performances.length
+      sumOfPerformances / sets.length
     );
 
     return averagePerformancePerSet;
   }
 
   function handleCalculateAvgReps() {
-    const sumOfReps = reps.reduce((acc, cur) => acc + cur, 0);
-    const averageRepsPerSet = Math.floor(sumOfReps / reps.length);
+    const sumOfReps = sets.reduce((acc, cur) => acc + cur.rep, 0);
+    const averageRepsPerSet = Math.floor(sumOfReps / sets.length);
 
     return averageRepsPerSet;
   }
@@ -79,7 +125,7 @@ function ExerciseDetailForm({
     if (!avgPerform || !avgReps || !date) return;
     const newExerciseData: ExerciseDataFormType = {
       userId,
-      exercise: slug,
+      exerciseId: slug,
       date: date,
       avg_performance: avgPerform,
       avg_reps: avgReps,
@@ -106,49 +152,57 @@ function ExerciseDetailForm({
             </button>
           )}
         </div>
-        {type === "cardio" || type === "core"
+        {type === "cardio"
           ? sets.map((set, i) => (
-              <div key={i} className="flex gap-2 items-center justify-between">
-                <label htmlFor={`set_${i}`}>{`Set ${i + 1}`}: </label>
+              <div
+                key={set.id}
+                className="flex gap-2 items-center justify-between"
+              >
                 <input
                   id={`set_${i}`}
                   type="number"
-                  className="p-2 w-2/4"
-                  placeholder={`body weight`}
-                  onBlur={(e) =>
-                    setPerformances([...performances, +e.target.value])
-                  }
+                  className="p-2 w-2/4 my-2"
+                  required
+                  placeholder={`distance`}
+                  onChange={(e) => handleUpdatePerformance(e, set.id)}
                 />
                 x
                 <input
                   id={`set_${i}`}
                   type="number"
                   className="p-2 w-1/4"
+                  required
                   placeholder="mins"
-                  onBlur={(e) => setReps([...reps, +e.target.value])}
+                  onChange={(e) => handleUpdateReps(e, set.id)}
                 />
               </div>
             ))
           : sets.map((set, i) => (
-              <div key={i} className="flex gap-2 items-center justify-between">
-                <label htmlFor={`set_${i}`}>{`Set ${i + 1}`}: </label>
+              <div
+                key={set.id}
+                className="flex gap-2 items-center justify-between"
+              >
+                <label htmlFor={`set_${i}`}>{`${i + 1}`}: </label>
                 <input
                   id={`set_${i}`}
                   type="number"
-                  className="p-2 w-2/4"
+                  className="p-2 w-2/4 my-2"
                   placeholder={`weight`}
-                  onBlur={(e) =>
-                    setPerformances([...performances, +e.target.value])
-                  }
+                  required
+                  onChange={(e) => handleUpdatePerformance(e, set.id)}
                 />
                 x
                 <input
                   id={`set_${i}`}
                   type="number"
                   className="p-2 w-1/4"
-                  placeholder="unit"
-                  onBlur={(e) => setReps([...reps, +e.target.value])}
+                  required
+                  placeholder={type === "core" ? "secs" : "reps"}
+                  onChange={(e) => handleUpdateReps(e, set.id)}
                 />
+                <button onClick={(e) => handleDeleteSet(e, set.id)}>
+                  <BiMinusCircle className="text-red-500 text-2xl" />
+                </button>
               </div>
             ))}
       </div>

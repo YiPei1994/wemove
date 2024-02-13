@@ -1,6 +1,7 @@
 "use client";
 
 import Spinner from "@/components/Spinner";
+import Exercise from "@/components/exercises/Exercise";
 import { getAllExercisesOfType } from "@/servises/apiExercise";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
@@ -24,19 +25,16 @@ const GymExercisepage = ({ params }: pageProps) => {
     <div className="bg-slate-50 my-6 h-auto w-[90%] mx-auto rounded-xl p-4 flex flex-col gap-6">
       <header className="text-center w-4/5 text-lg m-auto flex flex-col gap-4">
         <h1 className="text-2xl">All {query} exercises</h1>
-        <p>
-          Find and add your best score to the exercise loved by all, or create
-          it and add in for everyone.
-        </p>
+        {exercises?.length === 0 && <p>No exercise yet, lets add some!</p>}
       </header>
       <div className="flex flex-wrap gap-4">
         {exercises?.map((exercise) => (
           <Link
-            key={exercise.exercise_id}
+            key={exercise.slug}
             className="px-4 py-2 text-white bg-blue-600/90 rounded-lg uppercase w-[90%] m-auto"
             href={`/gym/${query}/${exercise.slug}`}
           >
-            {exercise.exercise_name.replaceAll("_", " ")}{" "}
+            <Exercise exercise={exercise} />
           </Link>
         ))}
       </div>

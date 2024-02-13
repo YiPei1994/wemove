@@ -7,10 +7,11 @@ import ExerciseDetailForm from "@/components/exercises/ExerciseDetailForm";
 
 import {
   getBestExerciseData,
+  getExerciseByExerciseId,
   getLastExerciseData,
 } from "@/servises/apiExercise";
 import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
+import Image from "next/image";
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -40,23 +41,45 @@ const ExerciseDetail = ({ params }: PageProps) => {
     queryFn: () => getBestExerciseData(userId, typedetailslug, exerciseData),
   });
 
-  const isLoading = isLoadingLast || isLoadingBest;
+  const { data: exercise, isLoading: isLoadingExact } = useQuery({
+    queryKey: [typeslug],
+    queryFn: () => getExerciseByExerciseId(typedetailslug, typeslug),
+  });
+  const isLoading = isLoadingLast || isLoadingBest || isLoadingExact;
 
   if (isLoading) return <Spinner />;
 
   return (
-    <div className="bg-slate-50 my-6 h-auto w-[90%] mx-auto rounded-xl p-4 flex flex-col gap-6">
+    <div className="bg-slate-50 my-6 h-auto w-[90%] mx-auto rounded-xl p-4 flex flex-col gap-6 justify-center items-center">
       <h2 className="text-2xl text-center">
-        {" "}
-        {typedetailslug.toUpperCase().replaceAll("-", " ")} performance
+        Performance of{" "}
+        {exercise?.exercise_name.toUpperCase().replaceAll("_", " ")}{" "}
       </h2>
+      {exercise && (
+        <Image
+          width={256}
+          height={256}
+          src={exercise.image}
+          alt={exercise.exercise_name}
+        />
+      )}
       <div>
         <h4>Your last exercise recod:</h4>
-        <ExerciseDetailBlock exerciseData={lastExerciseData} type={typeslug} />
+        {lastExerciseData && (
+          <ExerciseDetailBlock
+            exerciseData={lastExerciseData}
+            type={typeslug}
+          />
+        )}
       </div>
       <div>
         <h4>Your best exercise recod:</h4>
-        <ExerciseDetailBlock exerciseData={bestExerciseData} type={typeslug} />
+        {bestExerciseData && (
+          <ExerciseDetailBlock
+            exerciseData={bestExerciseData}
+            type={typeslug}
+          />
+        )}
       </div>
       {openFrom && (
         <ExerciseDetailForm

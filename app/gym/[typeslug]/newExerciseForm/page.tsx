@@ -5,6 +5,7 @@ import { NewExercise } from "@/lib/ExerciseType";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 type NewExerciseFormProps = {
   params: {
@@ -23,7 +24,7 @@ function NewExerciseForm({ params }: NewExerciseFormProps) {
     if (!exerciseName) return;
     const newExercise: NewExercise = {
       exercise_name: exerciseName.replaceAll(" ", "_").toLowerCase(),
-      slug: `${query}-exercise-${exerciseName.replaceAll(" ", "")}`,
+      slug: `${exerciseName.replaceAll(" ", "_")}_${uuidv4()}`,
     };
 
     addExercise(

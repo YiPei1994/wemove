@@ -26,8 +26,8 @@ export const getLastExerciseData = async (
       .from(exerciseData)
       .select()
       .eq("userId", userId)
-      .eq("exercise", exercise)
-      .order("tracking_id", { ascending: false })
+      .eq("exerciseId", exercise)
+      .order("data_id", { ascending: false })
       .limit(1);
 
     if (error) {
@@ -53,7 +53,7 @@ export const getBestExerciseData = async (
       .from(exerciseData)
       .select()
       .eq("userId", userId)
-      .eq("exercise", exercise)
+      .eq("exerciseId", exercise)
       .order("avg_performance", { ascending: false })
       .limit(1);
 
@@ -68,6 +68,23 @@ export const getBestExerciseData = async (
     console.error("Error in getBestExerciseData:", e.message);
     throw e;
   }
+};
+
+export const getExerciseByExerciseId = async (
+  exercideId: string,
+  query: string
+) => {
+  const { data, error } = await supabase
+    .from(query)
+    .select()
+    .eq("slug", exercideId)
+    .single();
+
+  if (error) {
+    throw new Error(error.message || "Could not find searched exercise.");
+  }
+
+  return data[0] as ExerciseType;
 };
 
 export const addNewExercise = async (

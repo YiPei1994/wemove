@@ -7,6 +7,9 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  images: {
+    domains: ["tvhloactoyhrcxrdmeie.supabase.co"],
+  },
 };
 
 export default nextConfig;
