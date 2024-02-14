@@ -4,11 +4,11 @@ import Spinner from "@/components/Spinner";
 import { useCurrentUser } from "@/components/auth/useCurrentUser";
 import ExerciseDetailBlock from "@/components/exercises/ExerciseDetail";
 import ExerciseDetailForm from "@/components/exercises/ExerciseDetailForm";
+import ExercisesDataDetails from "@/components/exercises/ExercisesDataDetails";
 
 import {
-  getBestExerciseData,
   getExerciseByExerciseId,
-  getLastExerciseData,
+  getExerciseData,
 } from "@/servises/apiExercise";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
@@ -33,16 +33,23 @@ const ExerciseDetail = ({ params }: PageProps) => {
 
   const { data: lastExerciseData, isLoading: isLoadingLast } = useQuery({
     queryKey: [exerciseData, typedetailslug, userId, "last"],
-    queryFn: () => getLastExerciseData(userId, typedetailslug, exerciseData),
+    queryFn: () =>
+      getExerciseData(userId, typedetailslug, exerciseData, "last"),
   });
 
   const { data: bestExerciseData, isLoading: isLoadingBest } = useQuery({
     queryKey: [exerciseData, typedetailslug, userId, "best"],
-    queryFn: () => getBestExerciseData(userId, typedetailslug, exerciseData),
+    queryFn: () =>
+      getExerciseData(userId, typedetailslug, exerciseData, "best"),
+  });
+
+  const { data: allExerciseData, isLoading: isLoadingAll } = useQuery({
+    queryKey: [exerciseData, typedetailslug, userId, "all"],
+    queryFn: () => getExerciseData(userId, typedetailslug, exerciseData, "all"),
   });
 
   const { data: exercise, isLoading: isLoadingExact } = useQuery({
-    queryKey: [typeslug],
+    queryKey: [typeslug, typedetailslug, "exact"],
     queryFn: () => getExerciseByExerciseId(typedetailslug, typeslug),
   });
   const isLoading = isLoadingLast || isLoadingBest || isLoadingExact;
@@ -63,8 +70,17 @@ const ExerciseDetail = ({ params }: PageProps) => {
           alt={exercise.exercise_name}
         />
       )}
-      <div>
-        <h4>Your last exercise recod:</h4>
+      <div className="w-full">
+        <h4 className="text-center text-2xl">Best record</h4>
+        {bestExerciseData && (
+          <ExerciseDetailBlock
+            exerciseData={bestExerciseData}
+            type={typeslug}
+          />
+        )}
+      </div>
+      <div className="w-full">
+        <h4 className="text-center text-2xl">Last record</h4>
         {lastExerciseData && (
           <ExerciseDetailBlock
             exerciseData={lastExerciseData}
@@ -72,13 +88,11 @@ const ExerciseDetail = ({ params }: PageProps) => {
           />
         )}
       </div>
-      <div>
-        <h4>Your best exercise recod:</h4>
-        {bestExerciseData && (
-          <ExerciseDetailBlock
-            exerciseData={bestExerciseData}
-            type={typeslug}
-          />
+
+      <div className="w-full">
+        <h4 className="text-center text-2xl">Last 30 records</h4>
+        {allExerciseData && (
+          <ExercisesDataDetails allExerciseData={allExerciseData} />
         )}
       </div>
       {openFrom && (

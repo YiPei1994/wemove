@@ -1,33 +1,34 @@
 import { ExerciseDataType } from "@/lib/ExerciseType";
-import { getExerciseByExerciseId } from "@/servises/apiExercise";
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import Spinner from "../Spinner";
-import Image from "next/image";
+
 type ExerciseDetailProps = {
-  exerciseData: ExerciseDataType;
+  exerciseData: ExerciseDataType[];
   type: string;
 };
 function ExerciseDetailBlock({ exerciseData, type }: ExerciseDetailProps) {
-  const { date, avg_reps, avg_performance } = exerciseData;
+  const { date, avg_reps, avg_performance } = exerciseData[0];
 
   if (!exerciseData) return <p>You have no data on this yet.</p>;
 
   return (
-    <div className="flex flex-col gap-2 justify-center items-center">
-      <div className="flex justify-between w-full">
-        <p>Date: {date?.split("-").reverse().join().replaceAll(",", ".")} </p>
+    <div className="flex flex-col  justify-center items-center my-2">
+      <div className="flex justify-between w-full items-center p-2 bg-neutral-950 text-blue-50">
+        <span>Date </span>
+        <span>Average</span>
       </div>
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full p-2 bg-neutral-200">
         <div className="flex gap-4 items-center">
           {type === "cardio" ? (
             <span>
-              You reached {avg_performance} in distance in {avg_reps} mins
+              {avg_performance} in distance in {avg_reps} mins
             </span>
           ) : (
-            <div>
-              <span>Average of {avg_reps} reps</span>
-              <span> with {avg_performance} kgs </span>
+            <div className="flex justify-between items-center w-full">
+              <span>{date} </span>
+              <span>
+                {" "}
+                {avg_performance} kgs x {avg_reps} reps{" "}
+              </span>
             </div>
           )}
         </div>
