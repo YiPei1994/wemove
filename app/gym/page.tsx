@@ -11,21 +11,39 @@ function GymPage() {
           className="px-4 py-2 rounded-lg text-blue-500 bg-blue-100 w-auto max-w-1/3 my-2 text-center text-sm"
           href="/gym/chest"
         >
-          <Image src="/bodyIcon/chest.png" alt="chest" width={64} height={64} />
+          <Image
+            loading="lazy"
+            src="/bodyIcon/chest.png"
+            alt="chest"
+            width={64}
+            height={64}
+          />
           <p className="mt-2">Chest</p>
         </Link>
         <Link
           className="px-4 py-2 rounded-lg text-blue-500 bg-blue-100 w-auto max-w-1/3 my-2 text-center text-sm"
           href="/gym/back"
         >
-          <Image src="/bodyIcon/back.png" alt="chest" width={64} height={64} />
+          <Image
+            loading="lazy"
+            src="/bodyIcon/back.png"
+            alt="chest"
+            width={64}
+            height={64}
+          />
           <p className="mt-2">Back</p>
         </Link>
         <Link
           className="px-4 py-2 rounded-lg text-blue-500 bg-blue-100 w-auto max-w-1/3 my-2 text-center text-sm"
           href="/gym/legs"
         >
-          <Image src="/bodyIcon/legs.png" alt="chest" width={64} height={64} />
+          <Image
+            loading="lazy"
+            src="/bodyIcon/legs.png"
+            alt="chest"
+            width={64}
+            height={64}
+          />
           <p className="mt-2">Legs</p>
         </Link>
         <Link
@@ -33,6 +51,7 @@ function GymPage() {
           href="/gym/shoulder"
         >
           <Image
+            loading="lazy"
             src="/bodyIcon/shoulder.png"
             alt="shoulder"
             width={64}
@@ -45,6 +64,7 @@ function GymPage() {
           href="/gym/triceps"
         >
           <Image
+            loading="lazy"
             src="/bodyIcon/triceps.png"
             alt="triceps"
             width={64}
@@ -57,6 +77,7 @@ function GymPage() {
           href="/gym/biceps"
         >
           <Image
+            loading="lazy"
             src="/bodyIcon/biceps.png"
             alt="biceps"
             width={64}
@@ -68,7 +89,13 @@ function GymPage() {
           className="px-4 py-2 rounded-lg text-blue-500 bg-blue-100 w-auto max-w-1/3 my-2 text-center text-sm"
           href="/gym/core"
         >
-          <Image src="/bodyIcon/core.png" alt="core" width={64} height={64} />
+          <Image
+            loading="lazy"
+            src="/bodyIcon/core.png"
+            alt="core"
+            width={64}
+            height={64}
+          />
           <p className="mt-2">Core</p>
         </Link>
         <Link
@@ -76,6 +103,7 @@ function GymPage() {
           href="/gym/cardio"
         >
           <Image
+            loading="lazy"
             src="/bodyIcon/cardio.png"
             alt="chest"
             width={64}

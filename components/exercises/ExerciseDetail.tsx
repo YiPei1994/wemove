@@ -6,7 +6,7 @@ type ExerciseDetailProps = {
   type: string;
 };
 function ExerciseDetailBlock({ exerciseData, type }: ExerciseDetailProps) {
-  const { date, avg_reps, avg_performance } = exerciseData[0];
+  const { date, avg_reps, avg_performance } = exerciseData[0] || {};
 
   if (!exerciseData) return <p>You have no data on this yet.</p>;
 

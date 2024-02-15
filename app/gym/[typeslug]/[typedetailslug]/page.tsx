@@ -62,7 +62,7 @@ const ExerciseDetail = ({ params }: PageProps) => {
         Performance of{" "}
         {exercise?.exercise_name.toUpperCase().replaceAll("_", " ")}{" "}
       </h2>
-      {exercise && (
+      {exercise?.image && (
         <Image
           width={256}
           height={256}

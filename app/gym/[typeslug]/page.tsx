@@ -55,4 +55,5 @@ const GymExercisepage = ({ params }: pageProps) => {
     </div>
   );
 };
+
 export default GymExercisepage;
