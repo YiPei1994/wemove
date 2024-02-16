@@ -1,5 +1,6 @@
 "use client";
 
+import { useCurrentUser } from "@/components/auth/useCurrentUser";
 import { useAddExercise } from "@/components/exercises/useAddExercise";
 import { NewExercise } from "@/lib/ExerciseType";
 import { useQueryClient } from "@tanstack/react-query";
@@ -16,15 +17,19 @@ type NewExerciseFormProps = {
 function NewExerciseForm({ params }: NewExerciseFormProps) {
   const query = params.typeslug;
   const [exerciseName, setExerciseName] = useState("");
+
   const router = useRouter();
   const { addExercise } = useAddExercise();
   const queryclient = useQueryClient();
+  const { user } = useCurrentUser();
+
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!exerciseName) return;
+    if (!exerciseName || !user) return;
     const newExercise: NewExercise = {
       exercise_name: exerciseName.replaceAll(" ", "_").toLowerCase(),
       slug: `${exerciseName.replaceAll(" ", "_")}_${uuidv4()}`,
+      owner: user.id,
     };
 
     addExercise(
@@ -54,6 +59,7 @@ function NewExerciseForm({ params }: NewExerciseFormProps) {
             onChange={(e) => setExerciseName(e.target.value)}
           />
         </div>
+
         <div className="w-4/5 justify-between items-center flex m-auto">
           <button
             className="px-4 py-2 text-white bg-red-600/90 rounded-lg"

@@ -19,6 +19,7 @@ export type ExerciseDataType = {
 export type NewExercise = {
   exercise_name: string;
   slug: string;
+  owner: string;
 };
 
 export type ExerciseDataFormType = {

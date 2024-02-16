@@ -1,6 +1,7 @@
 "use client";
 
 import Spinner from "@/components/Spinner";
+import { useCurrentUser } from "@/components/auth/useCurrentUser";
 import Exercise from "@/components/exercises/Exercise";
 import { getAllExercisesOfType } from "@/servises/apiExercise";
 import { useQuery } from "@tanstack/react-query";
@@ -14,9 +15,11 @@ type pageProps = {
 const GymExercisepage = ({ params }: pageProps) => {
   const query = params.typeslug;
   const router = useRouter();
+  const { user } = useCurrentUser();
+
   const { data: exercises, isLoading } = useQuery({
     queryKey: [`${query}`, query],
-    queryFn: () => getAllExercisesOfType(query),
+    queryFn: () => getAllExercisesOfType(query, user?.id),
   });
 
   if (isLoading) return <Spinner />;

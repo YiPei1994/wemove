@@ -4,10 +4,17 @@ import {
   ExerciseType,
   NewExercise,
 } from "@/lib/ExerciseType";
-import supabase from "./supabase";
+import supabase, { DEFAULT_USERID } from "./supabase";
 
-export const getAllExercisesOfType = async (query: string) => {
-  const { data, error } = await supabase.from(query).select("*");
+export const getAllExercisesOfType = async (
+  query: string,
+  owner: string | undefined
+) => {
+  if (!owner) return;
+  const { data, error } = await supabase
+    .from(query)
+    .select("*")
+    .eq("owner", owner || DEFAULT_USERID);
 
   if (error) {
     throw new Error(error.message || "couldnt fetch this type");
@@ -23,6 +30,17 @@ export const getExerciseData = async (
   type: string
 ) => {
   try {
+    // Check if the table is empty
+    const { count: rowCount } = await supabase
+      .from(exerciseData)
+      .select("data_id", { count: "exact" })
+      .eq("userId", userId)
+      .eq("exerciseId", exercise);
+
+    if (rowCount === 0) {
+      return []; // Return an empty array if the table is empty
+    }
+
     if (type === "last") {
       const { data, error } = await supabase
         .from(exerciseData)

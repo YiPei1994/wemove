@@ -12,7 +12,7 @@ export const getUserData = async (id: string) => {
     throw new Error("Could not find specific user data");
   }
 
-  return data;
+  return data as UserDataSchema;
 };
 export const upsertUserStat = async (newData: UserDataSchema, id: string) => {
   // Check if a row with the given userId already exists
