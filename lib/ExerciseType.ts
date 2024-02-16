@@ -28,4 +28,5 @@ export type ExerciseDataFormType = {
   date: string;
   avg_performance: number;
   avg_reps: number;
+  unit: string;
 };

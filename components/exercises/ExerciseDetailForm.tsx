@@ -6,6 +6,7 @@ import { CiSquarePlus } from "react-icons/ci";
 import { useAddExerciseData } from "./useAddExerciseData";
 import { useQueryClient } from "@tanstack/react-query";
 import { BiMinusCircle } from "react-icons/bi";
+import { useReadUser } from "../user/useReadUser";
 
 type ExerciseDetailFromProps = {
   type: string;
@@ -42,6 +43,9 @@ function ExerciseDetailForm({
   const [sets, setSets] = useState<Set[]>(
     type === "cardio" ? defaultCardioSets : defaultSets
   );
+  const [unit, setUnit] = useState("reps");
+
+  const { userData } = useReadUser();
 
   const { addExerciseData } = useAddExerciseData();
   const dataTable = `${type}Data`;
@@ -58,7 +62,6 @@ function ExerciseDetailForm({
   ) {
     e.preventDefault();
 
-    console.log(id);
     const newValue = parseFloat(e.target.value);
     if (isNaN(newValue)) return;
 
@@ -122,6 +125,7 @@ function ExerciseDetailForm({
       year: "numeric",
     });
 
+    console.log(avgPerform, avgReps, date);
     if (!avgPerform || !avgReps || !date) return;
     const newExerciseData: ExerciseDataFormType = {
       userId,
@@ -129,6 +133,7 @@ function ExerciseDetailForm({
       date: date,
       avg_performance: avgPerform,
       avg_reps: avgReps,
+      unit,
     };
 
     addExerciseData(
@@ -144,13 +149,36 @@ function ExerciseDetailForm({
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-2">
-        <div className="flex justify-between">
-          <label htmlFor="powerLevel">Performances: </label>
-          {type !== "cardio" && (
-            <button type="button" onClick={handleAddSet}>
-              <CiSquarePlus className="text-3xl" />
-            </button>
-          )}
+        <h4 className="text-center w-full">Performances</h4>
+        <div className="flex justify-between flex-col gap-4">
+          <div className="flex items-center justify-between gap-4">
+            <span>Length unit:</span>
+            <select
+              className="p-2 w-3/5"
+              onChange={(e) => setUnit(e.target.value)}
+            >
+              <option value="reps">repeats</option>
+              <option value="mins">minutes</option>
+              <option value="secs">seconds</option>
+              {type === "cardio" && <option value="floors">floors</option>}
+            </select>
+            {type !== "cardio" && (
+              <button type="button" onClick={handleAddSet}>
+                <CiSquarePlus className="text-3xl" />
+              </button>
+            )}
+          </div>
+          <div className="flex items-center justify-between">
+            {/* <div className="w-3/5 flex gap-4 items-center">
+              <span>Body weight?</span>
+              <input
+                type="checkbox"
+                className="w-5 h-5"
+                checked={bodyWeight}
+                onChange={(e) => setBodyWeight(e.target.checked)}
+              />{" "}
+            </div> */}
+          </div>
         </div>
         {type === "cardio"
           ? sets.map((set, i) => (
@@ -172,7 +200,7 @@ function ExerciseDetailForm({
                   type="number"
                   className="p-2 w-1/4"
                   required
-                  placeholder="mins"
+                  placeholder={unit}
                   onChange={(e) => handleUpdateReps(e, set.id)}
                 />
               </div>
@@ -197,7 +225,7 @@ function ExerciseDetailForm({
                   type="number"
                   className="p-2 w-1/4"
                   required
-                  placeholder={type === "core" ? "secs" : "reps"}
+                  placeholder={unit}
                   onChange={(e) => handleUpdateReps(e, set.id)}
                 />
                 <button onClick={(e) => handleDeleteSet(e, set.id)}>
