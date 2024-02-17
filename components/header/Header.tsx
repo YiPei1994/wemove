@@ -9,14 +9,18 @@ function Header() {
   const [displayNavbar, setDisplayNavbar] = useState(false);
 
   return (
-    <header className="flex w-full justify-between items-center p-4 flex-wrap lg:flex-nowrap bg-slate-50">
+    <header className="flex w-full justify-between items-center p-4 flex-wrap lg:flex-nowrap bg-[#BE3144]">
       <div>Logo</div>
 
       <button
         className="block lg:hidden"
         onClick={() => setDisplayNavbar((d) => !d)}
       >
-        {displayNavbar ? <FaTimes /> : <GiHamburgerMenu />}
+        {displayNavbar ? (
+          <FaTimes className="text-[#53B9C7] " />
+        ) : (
+          <GiHamburgerMenu />
+        )}
       </button>
       <nav
         className={`${

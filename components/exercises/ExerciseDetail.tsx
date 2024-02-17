@@ -12,11 +12,11 @@ function ExerciseDetailBlock({ exerciseData, type }: ExerciseDetailProps) {
 
   return (
     <div className="flex flex-col  justify-center items-center my-2">
-      <div className="flex justify-between w-full items-center p-2 bg-neutral-950 text-blue-50">
+      <div className="flex justify-between w-full items-center p-2 ">
         <span>Date </span>
         <span>Average</span>
       </div>
-      <div className="flex flex-col w-full p-2 bg-neutral-200">
+      <div className="flex flex-col w-full p-2">
         <div className="flex gap-4 items-center">
           {type === "cardio" ? (
             <span>

@@ -43,7 +43,7 @@ function NewExerciseForm({ params }: NewExerciseFormProps) {
     );
   }
   return (
-    <div className="bg-slate-50 my-4 h-auto w-[90%] mx-auto rounded-xl p-4 flex flex-col gap-6">
+    <div className="bg-[#BE3144] my-4 h-auto w-[90%] mx-auto rounded-xl p-4 flex flex-col gap-6">
       <header className="text-center w-auto text-2xl">
         New {query} exercise form
       </header>
@@ -62,12 +62,12 @@ function NewExerciseForm({ params }: NewExerciseFormProps) {
 
         <div className="w-4/5 justify-between items-center flex m-auto">
           <button
-            className="px-4 py-2 text-white bg-red-600/90 rounded-lg"
+            className="px-4 py-2  bg-[#FFE4E3] text-[#53B9C7] rounded-lg"
             onClick={() => router.back()}
           >
             Back
           </button>
-          <button className="px-4 py-2 text-white bg-green-600/90 rounded-lg">
+          <button className="px-4 py-2  bg-[#FFE4E3] text-[#53B9C7] rounded-lg">
             Add
           </button>
         </div>

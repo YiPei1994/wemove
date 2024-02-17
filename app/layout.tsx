@@ -21,7 +21,7 @@ export default function RootLayout({
     <ReactQueryClientProvider>
       <html lang="en">
         <body
-          className={`${inter.className} bg-gradient-to-r from-cyan-500 to-blue-500 	`}
+          className={`${inter.className} bg-gradient-to-r from-[#CF8787] to-[#FFE4E3] 	`}
         >
           <Toaster
             toastOptions={{

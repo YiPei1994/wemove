@@ -21,43 +21,28 @@ function MainNav() {
   return (
     <ul className="flex flex-col justify-center items-center gap-4 lg:flex-row">
       <li>
-        <Link className={path === "/" ? "text-blue-400" : ""} href="/">
+        <Link className={path === "/" ? "text-[#53B9C7]" : ""} href="/">
           Home
         </Link>
       </li>
 
       <li>
         <Link
-          className={path.startsWith("/indoor") ? "text-blue-400" : ""}
+          className={path.startsWith("/gym") ? "text-[#53B9C7]" : ""}
           href="/gym"
         >
           Gym
         </Link>
       </li>
-      <li>
-        <Link
-          className={path.startsWith("/outdoor") ? "text-blue-400" : ""}
-          href="/outdoor"
-        >
-          OutDoor
-        </Link>
-      </li>
+
       {isAutenticated && (
         <>
           <li>
             <Link
-              className={path.startsWith("/user") ? "text-blue-400" : ""}
+              className={path.startsWith("/user") ? "text-[#53B9C7]" : ""}
               href="/user"
             >
               User stats
-            </Link>
-          </li>
-          <li>
-            <Link
-              className={path.startsWith("/graph") ? "text-blue-400" : ""}
-              href="/graph"
-            >
-              Graph stats
             </Link>
           </li>
         </>
@@ -67,21 +52,21 @@ function MainNav() {
         {isAutenticated ? (
           <button
             className={`${
-              path.startsWith("/graph") ? "text-blue-400" : ""
+              path.startsWith("/graph") ? "text-[#53B9C7]" : ""
             } flex items-center gap-4`}
             onClick={handleLogout}
           >
-            <IoIosLogOut />
+            <IoIosLogOut className="text-[#53B9C7] " />
             Log out
           </button>
         ) : (
           <Link
             className={`${
-              path.startsWith("/graph") ? "text-blue-400" : ""
+              path.startsWith("/graph") ? "text-[#53B9C7]" : ""
             } flex items-center gap-4`}
             href="/login"
           >
-            <FaUser /> Log in
+            <FaUser className="text-[#53B9C7] " /> Log in
           </Link>
         )}
       </li>

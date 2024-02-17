@@ -13,7 +13,7 @@ function User() {
   return (
     <div className="flex flex-col justify-center items-center w-full">
       <div className="flex items-center justify-center ">
-        <FaUserDoctor className="text-5xl" />
+        <FaUserDoctor className="text-5xl text-[#53B9C7] " />
       </div>
       {!userData && (
         <p className="m-4">
@@ -46,7 +46,7 @@ function User() {
       )}
       <button
         onClick={toggleUserForm}
-        className="px-4 py-2 w-auto bg-blue-300 rounded-lg text-white"
+        className="px-4 py-2 w-auto bg-[#53B9C7] rounded-lg "
       >
         {userData ? "Update data" : "Add data"}{" "}
       </button>

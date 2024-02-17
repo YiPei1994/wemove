@@ -152,7 +152,7 @@ function ExerciseDetailForm({
         <h4 className="text-center w-full">Performances</h4>
         <div className="flex justify-between flex-col gap-4">
           <div className="flex items-center justify-between gap-4">
-            <span>Length unit:</span>
+            <span>Length:</span>
             <select
               className="p-2 w-3/5"
               onChange={(e) => setUnit(e.target.value)}
@@ -164,7 +164,7 @@ function ExerciseDetailForm({
             </select>
             {type !== "cardio" && (
               <button type="button" onClick={handleAddSet}>
-                <CiSquarePlus className="text-3xl" />
+                <CiSquarePlus className="text-3xl text-[#53B9C7] " />
               </button>
             )}
           </div>
@@ -229,7 +229,7 @@ function ExerciseDetailForm({
                   onChange={(e) => handleUpdateReps(e, set.id)}
                 />
                 <button onClick={(e) => handleDeleteSet(e, set.id)}>
-                  <BiMinusCircle className="text-red-500 text-2xl" />
+                  <BiMinusCircle className="text-2xl text-[#53B9C7] " />
                 </button>
               </div>
             ))}
@@ -237,12 +237,12 @@ function ExerciseDetailForm({
 
       <div className="w-4/5 justify-between items-center flex m-auto">
         <button
-          className="px-4 py-2 text-white bg-red-600 rounded-lg"
+          className="px-4 py-2  bg-[#FFE4E3] text-[#53B9C7] rounded-lg"
           onClick={() => open(false)}
         >
           Close
         </button>
-        <button className="px-4 py-2 text-white bg-green-400 rounded-lg">
+        <button className="px-4 py-2  bg-[#FFE4E3] text-[#53B9C7] rounded-lg">
           Add
         </button>
       </div>
