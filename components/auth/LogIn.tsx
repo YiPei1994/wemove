@@ -5,6 +5,8 @@ import { FormEvent, useState } from "react";
 import { useLogin } from "./useLogin";
 import { useRouter } from "next/navigation";
 
+import Logo from "../header/Logo";
+
 function LogIn() {
   const [email, setEmail] = useState("test@gmail.yp");
   const [password, setPassword] = useState("testacc");
@@ -25,7 +27,7 @@ function LogIn() {
   }
   return (
     <div className="flex justify-center flex-col gap-4 m-4 p-10 items-center mt-10 bg-[#be3144]">
-      <div>Logo</div>
+      <Logo />
       <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
           <input

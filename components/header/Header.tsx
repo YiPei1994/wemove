@@ -1,18 +1,18 @@
 "use client";
 
-import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaTimes } from "react-icons/fa";
 import MainNav from "./MainNav";
 import { useDisplayNavbar } from "@/store/bearStore/displayUserFrom";
+
+import Logo from "./Logo";
 
 function Header() {
   const { displayNavbar, toggleDisplayNavbar } = useDisplayNavbar();
 
   return (
     <header className="flex w-full justify-between items-center p-4 flex-wrap lg:flex-nowrap bg-[#BE3144]">
-      <div>Logo</div>
-
+      <Logo />
       <button className="block lg:hidden" onClick={() => toggleDisplayNavbar()}>
         {displayNavbar ? (
           <FaTimes className="text-[#53B9C7] " />

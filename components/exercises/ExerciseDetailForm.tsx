@@ -121,8 +121,8 @@ function ExerciseDetailForm({
 
   function handleCalculateAvePerformance() {
     const sumOfPerformances = sets.reduce((acc, cur) => acc + cur.set, 0);
-    const averagePerformancePerSet = Math.floor(
-      sumOfPerformances / sets.length
+    const averagePerformancePerSet = (sumOfPerformances / sets.length).toFixed(
+      2
     );
 
     return averagePerformancePerSet;
@@ -130,7 +130,7 @@ function ExerciseDetailForm({
 
   function handleCalculateAvgReps() {
     const sumOfReps = sets.reduce((acc, cur) => acc + cur.rep, 0);
-    const averageRepsPerSet = Math.floor(sumOfReps / sets.length);
+    const averageRepsPerSet = (sumOfReps / sets.length).toFixed(2);
 
     return averageRepsPerSet;
   }
@@ -150,8 +150,8 @@ function ExerciseDetailForm({
       userId,
       exerciseId: slug,
       date: date,
-      avg_performance: avgPerform,
-      avg_reps: avgReps,
+      avg_performance: +avgPerform,
+      avg_reps: +avgReps,
       unit,
     };
 
@@ -176,7 +176,7 @@ function ExerciseDetailForm({
           <div className="flex items-center justify-between gap-4">
             <span>Length:</span>
             <select
-              className="p-2 w-3/5"
+              className="px-2 py-1 w-3/5"
               onChange={(e) => setUnit(e.target.value)}
             >
               <option value="reps">repeats</option>
@@ -195,7 +195,7 @@ function ExerciseDetailForm({
               <input
                 className="w-1/3 px-2"
                 type="number"
-                value={allWeights}
+                value={allWeights === 0 ? "" : allWeights}
                 onChange={(e) => setAllWeights(+e.target.value)}
               />
               <button
@@ -210,7 +210,7 @@ function ExerciseDetailForm({
               <input
                 className="w-1/3 px-2"
                 type="number"
-                value={allReps}
+                value={allReps === 0 ? "" : allReps}
                 onChange={(e) => setAllReps(+e.target.value)}
               />
               <button
@@ -231,18 +231,18 @@ function ExerciseDetailForm({
                 <input
                   id={`set_${i}`}
                   type="number"
-                  className="p-2 w-2/4 my-2"
+                  className="px-2 py-1 w-2/4 my-2"
                   required
-                  value={set.set}
+                  value={set.set === 0 ? "" : set.set}
                   onChange={(e) => handleUpdatePerformance(e, set.id)}
                 />
                 x
                 <input
                   id={`set_${i}`}
                   type="number"
-                  className="p-2 w-1/4"
+                  className="px-2 py-1 w-1/4"
                   required
-                  value={set.rep}
+                  value={set.rep === 0 ? "" : set.rep}
                   onChange={(e) => handleUpdateReps(e, set.id)}
                 />
               </div>
@@ -256,8 +256,8 @@ function ExerciseDetailForm({
                 <input
                   id={`set_${i}`}
                   type="number"
-                  className="p-2 w-2/4 my-2"
-                  value={set.set}
+                  className="px-2 py-1 w-2/4 my-2"
+                  value={set.set === 0 ? "" : set.set}
                   required
                   onChange={(e) => handleUpdatePerformance(e, set.id)}
                 />
@@ -265,9 +265,9 @@ function ExerciseDetailForm({
                 <input
                   id={`set_${i}`}
                   type="number"
-                  className="p-2 w-1/4"
+                  className="px-2 py-1 w-1/4"
                   required
-                  value={set.rep}
+                  value={set.rep === 0 ? "" : set.rep}
                   onChange={(e) => handleUpdateReps(e, set.id)}
                 />
                 <button onClick={(e) => handleDeleteSet(e, set.id)}>

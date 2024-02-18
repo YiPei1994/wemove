@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useSignup } from "./useSignup";
 import { useState } from "react";
+import Logo from "../header/Logo";
 function SignUp() {
   const [displayConfirm, setDisplayConfirm] = useState(false);
   const {
@@ -29,7 +30,7 @@ function SignUp() {
   }
   return (
     <div className="flex justify-center flex-col gap-4 m-4 p-10 items-center mt-10 bg-[#be3144]">
-      <div>Logo</div>
+      <Logo />
       {!displayConfirm && (
         <form
           className="flex flex-col gap-4 w-full"

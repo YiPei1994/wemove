@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:wght@300;400;500;600;700&display=swap");
 
 /**** 
 60: #BE3144
@@ -11,6 +12,10 @@ gradiet:  #CF8787 , #FFE4E3
 
 body {
   color: #ffe4e3;
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
 input,

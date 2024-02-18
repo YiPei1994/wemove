@@ -124,7 +124,7 @@ function UserForm() {
           <div className="flex justify-between">
             <label htmlFor="bmr">BMR:</label>
             <button type="button" onClick={handleCalculateBMR}>
-              <MdCalculate className="text-3xl" />
+              <MdCalculate className="text-3xl text-[#53B9C7]" />
             </button>
           </div>
           <input
@@ -153,7 +153,7 @@ function UserForm() {
           <div className="flex justify-between ">
             <label htmlFor="calories">Total daily calories:</label>
             <button type="button" onClick={handleCalculateCalories}>
-              <MdCalculate className="text-3xl" />
+              <MdCalculate className="text-3xl text-[#53B9C7]" />
             </button>
           </div>
           <input
