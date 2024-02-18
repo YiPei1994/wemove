@@ -46,7 +46,7 @@ function User() {
       )}
       <button
         onClick={toggleUserForm}
-        className="px-4 py-2 w-auto bg-[#53B9C7] rounded-lg "
+        className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
       >
         {userData ? "Update data" : "Add data"}{" "}
       </button>

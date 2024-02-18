@@ -28,7 +28,7 @@ function SignUp() {
     });
   }
   return (
-    <div className="flex justify-center flex-col gap-4 px-10 items-center mt-10 w-full">
+    <div className="flex justify-center flex-col gap-4 m-4 p-10 items-center mt-10 bg-[#be3144]">
       <div>Logo</div>
       {!displayConfirm && (
         <form
@@ -43,9 +43,7 @@ function SignUp() {
               placeholder="Your email..."
               {...register("email")}
             />
-            {errors.email && (
-              <p className="text-red-500">{`${errors.email.message}`} </p>
-            )}
+            {errors.email && <p>{`${errors.email.message}`} </p>}
           </div>
           <div className="flex flex-col gap-2">
             <input
@@ -55,9 +53,7 @@ function SignUp() {
               placeholder="Your password..."
               {...register("password")}
             />
-            {errors.password && (
-              <p className="text-red-500">{`${errors.password.message}`} </p>
-            )}
+            {errors.password && <p>{`${errors.password.message}`} </p>}
           </div>
           <div className="flex flex-col gap-2">
             <input
@@ -68,22 +64,20 @@ function SignUp() {
               {...register("confirmPassword")}
             />
             {errors.confirmPassword && (
-              <p className="text-red-500">
-                {`${errors.confirmPassword.message}`}{" "}
-              </p>
+              <p>{`${errors.confirmPassword.message}`} </p>
             )}
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between gap-2">
             <button
               type="reset"
-              className="px-4 py-2 w-auto bg-red-500 rounded-lg text-white"
+              className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
               onClick={() => route.push("/login")}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 w-auto bg-blue-500/50 rounded-lg text-white"
+              className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
             >
               Sign up
             </button>
@@ -91,7 +85,7 @@ function SignUp() {
         </form>
       )}
       {displayConfirm && (
-        <div className="flex justify-center items-center bg-slate-50 p-4 rounded-lg">
+        <div className="flex justify-center items-center bg-slate-50 p-4 rounded-sm">
           <p>Please check your email for authorization.</p>
         </div>
       )}

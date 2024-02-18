@@ -43,12 +43,15 @@ function NewExerciseForm({ params }: NewExerciseFormProps) {
     );
   }
   return (
-    <div className="bg-[#BE3144] my-4 h-auto w-[90%] mx-auto rounded-xl p-4 flex flex-col gap-6">
+    <div className="bg-[#BE3144] my-4 h-auto w-[90%] mx-auto rounded-sm p-4 flex flex-col gap-6">
       <header className="text-center w-auto text-2xl">
         New {query} exercise form
       </header>
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-2">
+      <form
+        className="flex flex-col gap-4 border border-[#ffe4e3] px-2 py-4"
+        onSubmit={handleSubmit}
+      >
+        <div className="flex flex-col gap-2 text-center">
           <label htmlFor="exercise_name">Exercise name:</label>
           <input
             id="exercise_name"
@@ -62,12 +65,12 @@ function NewExerciseForm({ params }: NewExerciseFormProps) {
 
         <div className="w-4/5 justify-between items-center flex m-auto">
           <button
-            className="px-4 py-2  bg-[#FFE4E3] text-[#53B9C7] rounded-lg"
+            className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
             onClick={() => router.back()}
           >
             Back
           </button>
-          <button className="px-4 py-2  bg-[#FFE4E3] text-[#53B9C7] rounded-lg">
+          <button className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm">
             Add
           </button>
         </div>

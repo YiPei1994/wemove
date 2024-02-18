@@ -72,7 +72,10 @@ function UserForm() {
   return (
     <>
       <h2 className="text-3xl text-center">User form</h2>
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="flex flex-col gap-4 border border-[#ffe4e3] px-2 py-4"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="flex flex-col gap-2">
           <label htmlFor="gender">Gender: </label>
 
@@ -167,14 +170,14 @@ function UserForm() {
           <button
             disabled={isSubmitting}
             type="reset"
-            className="px-4 py-2 w-auto bg-[#53B9C7] rounded-lg text-white"
+            className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
           >
             Reset
           </button>
           <button
             disabled={isSubmitting}
             type="submit"
-            className="px-4 py-2 w-auto bg-[#53B9C7] rounded-lg text-white"
+            className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
           >
             Save data
           </button>

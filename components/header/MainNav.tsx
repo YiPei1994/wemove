@@ -7,26 +7,27 @@ import { FaUser } from "react-icons/fa6";
 import { useCurrentUser } from "../auth/useCurrentUser";
 import { IoIosLogOut } from "react-icons/io";
 import { useLogOut } from "../auth/useLogout";
+import { useDisplayNavbar } from "@/store/bearStore/displayUserFrom";
 
 function MainNav() {
   const path = usePathname();
   const { isAutenticated } = useCurrentUser();
   const { logOut } = useLogOut();
   const route = useRouter();
-
+  const { toggleDisplayNavbar } = useDisplayNavbar();
   function handleLogout() {
     logOut();
     route.push("/login");
   }
   return (
     <ul className="flex flex-col justify-center items-center gap-4 lg:flex-row">
-      <li>
+      <li onClick={toggleDisplayNavbar}>
         <Link className={path === "/" ? "text-[#53B9C7]" : ""} href="/">
           Home
         </Link>
       </li>
 
-      <li>
+      <li onClick={toggleDisplayNavbar}>
         <Link
           className={path.startsWith("/gym") ? "text-[#53B9C7]" : ""}
           href="/gym"
@@ -36,19 +37,17 @@ function MainNav() {
       </li>
 
       {isAutenticated && (
-        <>
-          <li>
-            <Link
-              className={path.startsWith("/user") ? "text-[#53B9C7]" : ""}
-              href="/user"
-            >
-              User stats
-            </Link>
-          </li>
-        </>
+        <li onClick={toggleDisplayNavbar}>
+          <Link
+            className={path.startsWith("/user") ? "text-[#53B9C7]" : ""}
+            href="/user"
+          >
+            User stats
+          </Link>
+        </li>
       )}
 
-      <li>
+      <li onClick={toggleDisplayNavbar}>
         {isAutenticated ? (
           <button
             className={`${

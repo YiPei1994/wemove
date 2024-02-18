@@ -31,6 +31,10 @@ export const getExerciseData = async (
 ) => {
   try {
     // Check if the table is empty
+    if (!userId) {
+      return [];
+    }
+
     const { count: rowCount } = await supabase
       .from(exerciseData)
       .select("data_id", { count: "exact" })

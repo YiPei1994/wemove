@@ -8,16 +8,14 @@ type ExerciseProps = {
 
 function Exercise({ exercise }: ExerciseProps) {
   return (
-    <div className="flex gap-4 items-center">
-      {exercise.image && (
-        <Image
-          width={64}
-          height={64}
-          className="bg-blue-50 p-2 rounded-md"
-          alt={exercise.exercise_name}
-          src={exercise.image}
-        />
-      )}
+    <div className="flex gap-2 items-center">
+      <Image
+        loading="lazy"
+        src="/otherIcons/dumbell.png"
+        alt="chest"
+        width={24}
+        height={24}
+      />
       <span className="text-md">
         {exercise.exercise_name.replaceAll("_", " ")}{" "}
       </span>{" "}

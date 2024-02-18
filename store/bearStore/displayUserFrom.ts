@@ -10,3 +10,14 @@ export const useDisplayUserForm = create<DisplayUserForm>((set) => ({
   toggleUserForm: () =>
     set((state) => ({ displayUserForm: !state.displayUserForm })),
 }));
+
+type DisplayNavbar = {
+  displayNavbar: boolean;
+  toggleDisplayNavbar: () => void;
+};
+
+export const useDisplayNavbar = create<DisplayNavbar>((set) => ({
+  displayNavbar: false,
+  toggleDisplayNavbar: () =>
+    set((state) => ({ displayNavbar: !state.displayNavbar })),
+}));

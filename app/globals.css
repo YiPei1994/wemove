@@ -8,14 +8,17 @@
 10: #53B9C7
 gradiet:  #CF8787 , #FFE4E3
 ****/
+
 body {
   color: #ffe4e3;
 }
 
 input,
-select {
+select,
+select option {
   background: #ffe4e3;
   color: #be3144;
+  border-radius: 2px;
 }
 
 input::placeholder,

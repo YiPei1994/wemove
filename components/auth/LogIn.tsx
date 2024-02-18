@@ -24,7 +24,7 @@ function LogIn() {
     );
   }
   return (
-    <div className="flex justify-center flex-col gap-4 px-10 items-center mt-10">
+    <div className="flex justify-center flex-col gap-4 m-4 p-10 items-center mt-10 bg-[#be3144]">
       <div>Logo</div>
       <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
@@ -45,12 +45,12 @@ function LogIn() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <button className="px-4 py-2 w-auto bg-blue-500/50 rounded-lg text-white">
+        <div className="flex items-center justify-between gap-2 text-center">
+          <button className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm">
             Log in
           </button>
           <Link
-            className="px-4 py-2 w-auto bg-blue-500/50 rounded-lg text-white text-center"
+            className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
             href="/login/signup"
           >
             Sign up

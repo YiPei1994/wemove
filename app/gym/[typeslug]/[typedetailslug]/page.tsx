@@ -57,7 +57,7 @@ const ExerciseDetail = ({ params }: PageProps) => {
   if (isLoading) return <Spinner />;
 
   return (
-    <div className="bg-[#BE3144] my-6 h-auto w-[90%] mx-auto rounded-xl p-4 flex flex-col gap-6 justify-center items-center">
+    <div className="bg-[#BE3144] my-6 h-auto w-[90%] mx-auto rounded-sm p-4 flex flex-col gap-6 justify-center items-center">
       <h2 className="text-2xl text-center">
         Performance of{" "}
         {exercise?.exercise_name.toUpperCase().replaceAll("_", " ")}{" "}
@@ -106,16 +106,16 @@ const ExerciseDetail = ({ params }: PageProps) => {
       {!openFrom && (
         <div className="w-4/5 justify-between items-center flex m-auto">
           <button
-            className="px-4 py-2  bg-[#FFE4E3] text-[#53B9C7] rounded-lg"
+            className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
             onClick={() => router.back()}
           >
             Back
           </button>
           <button
-            className="px-4 py-2  bg-[#FFE4E3] text-[#53B9C7] rounded-lg"
+            className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
             onClick={() => setOpenForm((d) => !d)}
           >
-            Open add form
+            Add detail
           </button>
         </div>
       )}

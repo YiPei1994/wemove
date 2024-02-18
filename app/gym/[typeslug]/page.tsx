@@ -25,7 +25,7 @@ const GymExercisepage = ({ params }: pageProps) => {
   if (isLoading) return <Spinner />;
 
   return (
-    <div className="bg-[#BE3144] my-6 h-auto w-[90%] mx-auto rounded-xl p-4 flex flex-col gap-6">
+    <div className="bg-[#BE3144] my-6 h-auto w-[90%] mx-auto rounded-sm p-4 flex flex-col gap-6">
       <header className="text-center w-4/5 text-lg m-auto flex flex-col gap-4">
         <h1 className="text-2xl">All {query} exercises</h1>
         {exercises?.length === 0 && <p>No exercise yet, lets add some!</p>}
@@ -34,7 +34,7 @@ const GymExercisepage = ({ params }: pageProps) => {
         {exercises?.map((exercise) => (
           <Link
             key={exercise.slug}
-            className="px-4 py-2  bg-[#FFE4E3] text-[#53B9C7] rounded-lg uppercase w-[90%] m-auto"
+            className="px-2 py-2  bg-[#FFE4E3] text-[#be3144]  rounded-sm uppercase w-[auto] "
             href={`/gym/${query}/${exercise.slug}`}
           >
             <Exercise exercise={exercise} />
@@ -43,14 +43,14 @@ const GymExercisepage = ({ params }: pageProps) => {
       </div>
       <div className="w-4/5 justify-between items-center flex m-auto">
         <button
-          className="px-4 py-2  bg-[#FFE4E3] text-[#53B9C7] rounded-lg"
+          className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
           onClick={() => router.back()}
         >
           Back
         </button>
         <Link
           href={`/gym/${query}/newExerciseForm`}
-          className="px-4 py-2  bg-[#FFE4E3] text-[#53B9C7] rounded-lg"
+          className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
         >
           Add
         </Link>
