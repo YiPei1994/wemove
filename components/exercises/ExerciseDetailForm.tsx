@@ -6,8 +6,9 @@ import { CiSquarePlus } from "react-icons/ci";
 import { useAddExerciseData } from "./useAddExerciseData";
 import { useQueryClient } from "@tanstack/react-query";
 import { BiMinusCircle } from "react-icons/bi";
-import { useReadUser } from "../user/useReadUser";
 import { v4 as uuidv4 } from "uuid";
+import { MdTimer } from "react-icons/md";
+import { GiStrong } from "react-icons/gi";
 
 type ExerciseDetailFromProps = {
   type: string;
@@ -18,21 +19,21 @@ type ExerciseDetailFromProps = {
 
 type Set = {
   id: string;
-  set: number;
+  weight: number;
   rep: number;
 };
 
 const defaultSets = [
-  { id: uuidv4(), set: 0, rep: 0 },
-  { id: uuidv4(), set: 0, rep: 0 },
-  { id: uuidv4(), set: 0, rep: 0 },
+  { id: uuidv4(), weight: 0, rep: 0 },
+  { id: uuidv4(), weight: 0, rep: 0 },
+  { id: uuidv4(), weight: 0, rep: 0 },
 ];
 
-const defaultCardioSets = [{ id: uuidv4(), set: 0, rep: 0 }];
+const defaultCardioSets = [{ id: uuidv4(), weight: 0, rep: 0 }];
 
 const set = {
   id: uuidv4(),
-  set: 0,
+  weight: 0,
   rep: 0,
 };
 function ExerciseDetailForm({
@@ -54,7 +55,7 @@ function ExerciseDetailForm({
 
   function handleAddSet(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    setSets([...sets, { id: uuidv4(), set: 0, rep: 0 }]);
+    setSets([...sets, { id: uuidv4(), weight: 0, rep: 0 }]);
   }
 
   function handleUpdatePerformance(
@@ -68,7 +69,7 @@ function ExerciseDetailForm({
 
     const updatedSets = sets.map((set) => {
       if (set.id === id) {
-        return { ...set, set: newValue };
+        return { ...set, weight: newValue };
       }
       return set;
     });
@@ -104,9 +105,9 @@ function ExerciseDetailForm({
     e.preventDefault();
     if (!allWeights) return;
     const updatedSets = sets.map((set) => {
-      return { ...set, set: allWeights };
+      return { ...set, weight: allWeights };
     });
-    set.set = allWeights;
+    set.weight = allWeights;
     setSets(updatedSets);
   }
   function handleSetAllReps(e: React.MouseEvent<HTMLButtonElement>) {
@@ -120,7 +121,7 @@ function ExerciseDetailForm({
   }
 
   function handleCalculateAvePerformance() {
-    const sumOfPerformances = sets.reduce((acc, cur) => acc + cur.set, 0);
+    const sumOfPerformances = sets.reduce((acc, cur) => acc + cur.weight, 0);
     const averagePerformancePerSet = (sumOfPerformances / sets.length).toFixed(
       2
     );
@@ -190,34 +191,34 @@ function ExerciseDetailForm({
               </button>
             )}
           </div>
-          <div className="flex items-center justify-between">
-            <div className="flex gap-2 w-1/2">
+          <div className="flex items-center justify-between w-full gap-4 ">
+            <div className="flex justify-between w-1/2">
               <input
-                className="w-1/3 px-2"
+                className="w-3/5 px-2"
                 type="number"
                 value={allWeights === 0 ? "" : allWeights}
                 onChange={(e) => setAllWeights(+e.target.value)}
               />
               <button
-                className="text-[#53B9C7] py-1 px-1 border-[#53B9C7] border active:text-[#FFE4E3] active:border-[#FFE4E3] active:bg-[#53B9C7] hover:text-[#FFE4E3] hover:border-[#FFE4E3] hover:bg-[#53B9C7] rounded-sm"
+                className="text-[#53B9C7] py-1 px-1 text-xl border-[#53B9C7] border active:text-[#FFE4E3] active:border-[#FFE4E3] active:bg-[#53B9C7] hover:text-[#FFE4E3] hover:border-[#FFE4E3] hover:bg-[#53B9C7] rounded-sm"
                 onClick={handleUseBodyweight}
               >
-                All weight{" "}
+                <GiStrong />
               </button>
             </div>
 
-            <div className="flex gap-2  w-1/2">
+            <div className="flex justify-between  w-1/2">
               <input
-                className="w-1/3 px-2"
+                className="w-3/5 px-2"
                 type="number"
                 value={allReps === 0 ? "" : allReps}
                 onChange={(e) => setAllReps(+e.target.value)}
               />
               <button
-                className="text-[#53B9C7] py-1 px-1 border-[#53B9C7] border active:text-[#FFE4E3] active:border-[#FFE4E3] active:bg-[#53B9C7] hover:text-[#FFE4E3] hover:border-[#FFE4E3] hover:bg-[#53B9C7] rounded-sm"
+                className="text-[#53B9C7] py-1 px-1 text-xl  border-[#53B9C7] border active:text-[#FFE4E3] active:border-[#FFE4E3] active:bg-[#53B9C7] hover:text-[#FFE4E3] hover:border-[#FFE4E3] hover:bg-[#53B9C7] rounded-sm"
                 onClick={handleSetAllReps}
               >
-                All length
+                <MdTimer />
               </button>
             </div>
           </div>
@@ -233,7 +234,7 @@ function ExerciseDetailForm({
                   type="number"
                   className="px-2 py-1 w-2/4 my-2"
                   required
-                  value={set.set === 0 ? "" : set.set}
+                  value={set.weight === 0 ? "" : set.weight}
                   onChange={(e) => handleUpdatePerformance(e, set.id)}
                 />
                 x
@@ -252,12 +253,14 @@ function ExerciseDetailForm({
                 key={set.id}
                 className="flex gap-2 items-center justify-between"
               >
-                <label htmlFor={`set_${i}`}>{`${i + 1}`}: </label>
+                <label className="w-1/4" htmlFor={`set_${i}`}>
+                  {`Set ${i + 1}`}:{" "}
+                </label>
                 <input
                   id={`set_${i}`}
                   type="number"
-                  className="px-2 py-1 w-2/4 my-2"
-                  value={set.set === 0 ? "" : set.set}
+                  className="px-2 py-1 w-1/4 my-2 "
+                  value={set.weight === 0 ? "" : set.weight}
                   required
                   onChange={(e) => handleUpdatePerformance(e, set.id)}
                 />
