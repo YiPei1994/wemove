@@ -52,9 +52,12 @@ const ExerciseDetail = ({ params }: PageProps) => {
     queryKey: [typeslug, typedetailslug, "exact"],
     queryFn: () => getExerciseByExerciseId(typedetailslug, typeslug),
   });
-  const isLoading = isLoadingLast || isLoadingBest || isLoadingExact;
+  const isLoading =
+    isLoadingLast || isLoadingBest || isLoadingExact || isLoadingAll;
 
   if (isLoading) return <Spinner />;
+  if (!bestExerciseData || !lastExerciseData || !allExerciseData || !exercise)
+    return;
 
   return (
     <div className="bg-[#BE3144] my-6 h-auto w-[90%] mx-auto rounded-sm p-4 flex flex-col gap-6 justify-center items-center">
@@ -62,45 +65,48 @@ const ExerciseDetail = ({ params }: PageProps) => {
         Performance of{" "}
         {exercise?.exercise_name.toUpperCase().replaceAll("_", " ")}{" "}
       </h2>
-      {exercise?.image && (
-        <Image
-          width={256}
-          height={256}
-          src={exercise.image}
-          alt={exercise.exercise_name}
-        />
-      )}
-      <div className="w-full">
-        <h4 className="text-center text-2xl">Best record</h4>
-        {bestExerciseData && (
+      {bestExerciseData.length === 0 &&
+        lastExerciseData.length === 0 &&
+        allExerciseData.length === 0 && <p>No records yet, start adding.</p>}
+      {bestExerciseData.length !== 0 && (
+        <div className="w-full">
+          <h4 className="text-center text-2xl">Best record</h4>
+
           <ExerciseDetailBlock
             exerciseData={bestExerciseData}
             type={typeslug}
+            exercise={exercise}
           />
-        )}
-      </div>
-      <div className="w-full">
-        <h4 className="text-center text-2xl">Last record</h4>
-        {lastExerciseData && (
+        </div>
+      )}
+      {lastExerciseData.length !== 0 && (
+        <div className="w-full">
+          <h4 className="text-center text-2xl">Last record</h4>
+
           <ExerciseDetailBlock
             exerciseData={lastExerciseData}
             type={typeslug}
+            exercise={exercise}
           />
-        )}
-      </div>
+        </div>
+      )}
+      {allExerciseData.length !== 0 && (
+        <div className="w-full">
+          <h4 className="text-center text-2xl">Last 30 records</h4>
 
-      <div className="w-full">
-        <h4 className="text-center text-2xl">Last 30 records</h4>
-        {allExerciseData && (
-          <ExercisesDataDetails allExerciseData={allExerciseData} />
-        )}
-      </div>
+          <ExercisesDataDetails
+            allExerciseData={allExerciseData}
+            exercise={exercise}
+          />
+        </div>
+      )}
       {openFrom && (
         <ExerciseDetailForm
           type={typeslug}
           slug={typedetailslug}
           userId={userId}
           open={setOpenForm}
+          exercise={exercise}
         />
       )}
       {!openFrom && (
@@ -115,7 +121,7 @@ const ExerciseDetail = ({ params }: PageProps) => {
             className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
             onClick={() => setOpenForm((d) => !d)}
           >
-            Add detail
+            Track
           </button>
         </div>
       )}

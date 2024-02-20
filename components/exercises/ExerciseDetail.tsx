@@ -1,14 +1,19 @@
-import { ExerciseDataType } from "@/lib/ExerciseType";
+import { ExerciseDataType, ExerciseType } from "@/lib/ExerciseType";
 import React from "react";
 
 type ExerciseDetailProps = {
   exerciseData: ExerciseDataType[];
   type: string;
+  exercise: ExerciseType;
 };
-function ExerciseDetailBlock({ exerciseData, type }: ExerciseDetailProps) {
+function ExerciseDetailBlock({
+  exerciseData,
+  type,
+  exercise,
+}: ExerciseDetailProps) {
   const { date, avg_reps, avg_performance } = exerciseData[0] || {};
 
-  if (!exerciseData) return <p>You have no data on this yet.</p>;
+  if (!exerciseData || !exercise) return <p>You have no data on this yet.</p>;
 
   return (
     <div className="flex flex-col  justify-center items-center my-2">
@@ -18,19 +23,13 @@ function ExerciseDetailBlock({ exerciseData, type }: ExerciseDetailProps) {
       </div>
       <div className="flex flex-col w-full p-2">
         <div className="flex gap-4 items-center">
-          {type === "cardio" ? (
+          <div className="flex justify-between items-center w-full">
+            <span>{date} </span>
             <span>
-              {avg_performance} in distance in {avg_reps} mins
+              {avg_performance} {exercise.metric} with {avg_reps}{" "}
+              {exercise.unit}
             </span>
-          ) : (
-            <div className="flex justify-between items-center w-full">
-              <span>{date} </span>
-              <span>
-                {" "}
-                {avg_performance} kgs x {avg_reps} reps{" "}
-              </span>
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

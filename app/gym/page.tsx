@@ -18,7 +18,7 @@ function GymPage() {
             width={64}
             height={64}
           />
-          <p className="mt-2">Chest</p>
+          <p className="mt-2 text-md">Chest</p>
         </Link>
         <Link
           className="px-4 py-2 rounded-sm text-[#53B9C7] bg-[#FFE4E3]  w-auto max-w-1/3 my-2 text-center text-sm"
@@ -31,7 +31,7 @@ function GymPage() {
             width={64}
             height={64}
           />
-          <p className="mt-2">Back</p>
+          <p className="mt-2 text-md">Back</p>
         </Link>
         <Link
           className="px-4 py-2 rounded-sm text-[#53B9C7] bg-[#FFE4E3]  w-auto max-w-1/3 my-2 text-center text-sm"
@@ -44,7 +44,7 @@ function GymPage() {
             width={64}
             height={64}
           />
-          <p className="mt-2">Legs</p>
+          <p className="mt-2 text-md">Legs</p>
         </Link>
         <Link
           className="px-4 py-2 rounded-sm text-[#53B9C7] bg-[#FFE4E3]  w-auto max-w-1/3 my-2 text-center text-sm"
@@ -57,7 +57,7 @@ function GymPage() {
             width={64}
             height={64}
           />
-          <p className="mt-2">Shoulder</p>
+          <p className="mt-2 text-md">Shoulder</p>
         </Link>
         <Link
           className="px-4 py-2 rounded-sm text-[#53B9C7] bg-[#FFE4E3]  w-auto max-w-1/3 my-2 text-center text-sm"
@@ -70,7 +70,7 @@ function GymPage() {
             width={64}
             height={64}
           />
-          <p className="mt-2">Triceps</p>
+          <p className="mt-2 text-md">Triceps</p>
         </Link>
         <Link
           className="px-4 py-2 rounded-sm text-[#53B9C7] bg-[#FFE4E3]  w-auto max-w-1/3 my-2 text-center text-sm"
@@ -83,7 +83,7 @@ function GymPage() {
             width={64}
             height={64}
           />
-          <p className="mt-2">Biceps</p>
+          <p className="mt-2 text-md">Biceps</p>
         </Link>
         <Link
           className="px-4 py-2 rounded-sm text-[#53B9C7] bg-[#FFE4E3]  w-auto max-w-1/3 my-2 text-center text-sm"
@@ -96,7 +96,7 @@ function GymPage() {
             width={64}
             height={64}
           />
-          <p className="mt-2">Core</p>
+          <p className="mt-2 text-md">Core</p>
         </Link>
         <Link
           className="px-4 py-2 rounded-sm text-[#53B9C7]  bg-[#FFE4E3]  w-auto max-w-1/3 my-2 text-center text-sm"
@@ -109,7 +109,7 @@ function GymPage() {
             width={64}
             height={64}
           />
-          <p className="mt-2">Cardio</p>
+          <p className="mt-2 text-md">Cardio</p>
         </Link>
       </div>
     </div>

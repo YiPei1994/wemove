@@ -1,11 +1,15 @@
-import { ExerciseDataType } from "@/lib/ExerciseType";
+import { ExerciseDataType, ExerciseType } from "@/lib/ExerciseType";
 import React from "react";
 
 type ExercisesDataDetailsProps = {
   allExerciseData: ExerciseDataType[];
+  exercise: ExerciseType;
 };
 
-function ExercisesDataDetails({ allExerciseData }: ExercisesDataDetailsProps) {
+function ExercisesDataDetails({
+  allExerciseData,
+  exercise,
+}: ExercisesDataDetailsProps) {
   return (
     <div className="flex flex-col  justify-center items-center my-2">
       <div className="flex justify-between w-full items-center p-2 ">
@@ -19,7 +23,8 @@ function ExercisesDataDetails({ allExerciseData }: ExercisesDataDetailsProps) {
           >
             <span>{data.date} </span>{" "}
             <span>
-              {data.avg_performance} kgs x {data.avg_reps} reps
+              {data.avg_performance} {exercise.metric} with {data.avg_reps}{" "}
+              {exercise.unit}
             </span>{" "}
           </li>
         ))}

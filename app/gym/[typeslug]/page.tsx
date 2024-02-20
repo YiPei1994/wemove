@@ -34,10 +34,10 @@ const GymExercisepage = ({ params }: pageProps) => {
         {exercises?.map((exercise) => (
           <Link
             key={exercise.slug}
-            className="px-4 py-2  bg-[#FFE4E3] text-[#be3144]  rounded-sm uppercase w-[auto] "
+            className="px-4 py-2  bg-[#FFE4E3] text-[#be3144] w-full rounded-sm uppercase "
             href={`/gym/${query}/${exercise.slug}`}
           >
-            <Exercise exercise={exercise} />
+            <Exercise exercise={exercise} query={query} />
           </Link>
         ))}
       </div>

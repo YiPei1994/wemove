@@ -150,3 +150,17 @@ export const addNewExerciseData = async (
   }
   return data;
 };
+
+/**** delete a specific exercise ********/
+
+export const deleteExercise = async (query: string, id: number) => {
+  const { data, error } = await supabase
+    .from(query)
+    .delete()
+    .eq("exercise_id", id);
+
+  if (error) {
+    throw new Error(error.message || "unable to delete");
+  }
+  return data;
+};

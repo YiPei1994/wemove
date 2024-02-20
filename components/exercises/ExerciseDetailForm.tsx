@@ -1,6 +1,6 @@
 "use client";
 
-import { ExerciseDataFormType } from "@/lib/ExerciseType";
+import { ExerciseDataFormType, ExerciseType } from "@/lib/ExerciseType";
 import React, { FormEvent, useState } from "react";
 import { CiSquarePlus } from "react-icons/ci";
 import { useAddExerciseData } from "./useAddExerciseData";
@@ -14,6 +14,7 @@ type ExerciseDetailFromProps = {
   type: string;
   slug: string;
   userId: string | undefined;
+  exercise: ExerciseType;
   open: (d: boolean) => void;
 };
 
@@ -41,11 +42,12 @@ function ExerciseDetailForm({
   userId,
   open,
   type,
+  exercise,
 }: ExerciseDetailFromProps) {
   const [sets, setSets] = useState<Set[]>(
     type === "cardio" ? defaultCardioSets : defaultSets
   );
-  const [unit, setUnit] = useState("reps");
+
   const [allReps, setAllReps] = useState(0);
   const [allWeights, setAllWeights] = useState(0);
 
@@ -153,7 +155,6 @@ function ExerciseDetailForm({
       date: date,
       avg_performance: +avgPerform,
       avg_reps: +avgReps,
-      unit,
     };
 
     addExerciseData(
@@ -174,29 +175,18 @@ function ExerciseDetailForm({
       <div className="flex flex-col gap-2">
         <h4 className="text-center w-full">Performances</h4>
         <div className="flex justify-between flex-col gap-4">
-          <div className="flex items-center justify-between gap-4">
-            <span>Length:</span>
-            <select
-              className="px-2 py-1 w-3/5"
-              onChange={(e) => setUnit(e.target.value)}
-            >
-              <option value="reps">repeats</option>
-              <option value="mins">minutes</option>
-              <option value="secs">seconds</option>
-              {type === "cardio" && <option value="floors">floors</option>}
-            </select>
-            {type !== "cardio" && (
-              <button type="button" onClick={handleAddSet}>
-                <CiSquarePlus className="text-3xl text-[#53B9C7] " />
-              </button>
-            )}
+          <div className="flex items-center justify-center gap-4">
+            <button type="button" onClick={handleAddSet}>
+              <CiSquarePlus className="text-5xl text-[#53B9C7] " />
+            </button>
           </div>
-          <div className="flex items-center justify-between w-full gap-4 ">
-            <div className="flex justify-between w-1/2">
+          <div className="flex items-center justify-between w-full gap-4">
+            <div className="flex justify-center w-1/2 gap-2">
               <input
+                id="allmetric"
                 className="w-3/5 px-2"
                 type="number"
-                value={allWeights === 0 ? "" : allWeights}
+                placeholder={`all ${exercise.metric}`}
                 onChange={(e) => setAllWeights(+e.target.value)}
               />
               <button
@@ -207,77 +197,50 @@ function ExerciseDetailForm({
               </button>
             </div>
 
-            <div className="flex justify-between  w-1/2">
-              <input
-                className="w-3/5 px-2"
-                type="number"
-                value={allReps === 0 ? "" : allReps}
-                onChange={(e) => setAllReps(+e.target.value)}
-              />
+            <div className="flex justify-center  w-1/2 gap-2">
               <button
                 className="text-[#53B9C7] py-1 px-1 text-xl  border-[#53B9C7] border active:text-[#FFE4E3] active:border-[#FFE4E3] active:bg-[#53B9C7] hover:text-[#FFE4E3] hover:border-[#FFE4E3] hover:bg-[#53B9C7] rounded-sm"
                 onClick={handleSetAllReps}
               >
                 <MdTimer />
               </button>
+              <input
+                className="w-3/5 px-2"
+                type="number"
+                id="allunit"
+                placeholder={`all ${exercise.unit}`}
+                onChange={(e) => setAllReps(+e.target.value)}
+              />
             </div>
           </div>
         </div>
-        {type === "cardio"
-          ? sets.map((set, i) => (
-              <div
-                key={set.id}
-                className="flex gap-2 items-center justify-between"
-              >
-                <input
-                  id={`set_${i}`}
-                  type="number"
-                  className="px-2 py-1 w-2/4 my-2"
-                  required
-                  value={set.weight === 0 ? "" : set.weight}
-                  onChange={(e) => handleUpdatePerformance(e, set.id)}
-                />
-                x
-                <input
-                  id={`set_${i}`}
-                  type="number"
-                  className="px-2 py-1 w-1/4"
-                  required
-                  value={set.rep === 0 ? "" : set.rep}
-                  onChange={(e) => handleUpdateReps(e, set.id)}
-                />
-              </div>
-            ))
-          : sets.map((set, i) => (
-              <div
-                key={set.id}
-                className="flex gap-2 items-center justify-between"
-              >
-                <label className="w-1/4" htmlFor={`set_${i}`}>
-                  {`Set ${i + 1}`}:{" "}
-                </label>
-                <input
-                  id={`set_${i}`}
-                  type="number"
-                  className="px-2 py-1 w-1/4 my-2 "
-                  value={set.weight === 0 ? "" : set.weight}
-                  required
-                  onChange={(e) => handleUpdatePerformance(e, set.id)}
-                />
-                x
-                <input
-                  id={`set_${i}`}
-                  type="number"
-                  className="px-2 py-1 w-1/4"
-                  required
-                  value={set.rep === 0 ? "" : set.rep}
-                  onChange={(e) => handleUpdateReps(e, set.id)}
-                />
-                <button onClick={(e) => handleDeleteSet(e, set.id)}>
-                  <BiMinusCircle className="text-2xl text-[#53B9C7] " />
-                </button>
-              </div>
-            ))}
+        {sets.map((set, i) => (
+          <div key={set.id} className="flex gap-2 items-center justify-between">
+            <label className="w-1/4" htmlFor={`set_${i}_metric`}>
+              {`Set ${i + 1}`}:{" "}
+            </label>
+            <input
+              id={`set_${i}_metric`}
+              type="number"
+              className="px-2 py-1 w-1/4 my-2"
+              placeholder={exercise.metric}
+              required
+              onChange={(e) => handleUpdatePerformance(e, set.id)}
+            />
+            x
+            <input
+              id={`set_${i}_unit`}
+              type="number"
+              className="px-2 py-1 w-1/4"
+              placeholder={exercise.unit}
+              required
+              onChange={(e) => handleUpdateReps(e, set.id)}
+            />
+            <button onClick={(e) => handleDeleteSet(e, set.id)}>
+              <BiMinusCircle className="text-2xl text-[#53B9C7]" />
+            </button>
+          </div>
+        ))}
       </div>
 
       <div className="w-4/5 justify-between items-center flex m-auto">
