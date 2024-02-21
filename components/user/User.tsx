@@ -2,8 +2,9 @@
 
 import { FaUserDoctor } from "react-icons/fa6";
 import { useReadUser } from "./useReadUser";
-import { useDisplayUserForm } from "@/store/bearStore/displayUserFrom";
+
 import Spinner from "../Spinner";
+import { useDisplayUserForm } from "@/store/useDisplayUserFrom";
 
 function User() {
   const { userData, isLoading } = useReadUser();

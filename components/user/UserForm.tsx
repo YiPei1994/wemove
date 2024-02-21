@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserDataSchema, userDataSchema } from "@/lib/userType";
 import { useUpdateUserData } from "./useUpdateUserData";
-import { useDisplayUserForm } from "@/store/bearStore/displayUserFrom";
+import { useDisplayUserForm } from "@/store/useDisplayUserFrom";
 import { useCurrentUser } from "../auth/useCurrentUser";
 function UserForm() {
   const {

@@ -1,5 +1,5 @@
 "use client";
-import { useDisplayUserForm } from "../../store/bearStore/displayUserFrom";
+import { useDisplayUserForm } from "../../store/useDisplayUserFrom";
 import UserForm from "@/components/user/UserForm";
 import User from "@/components/user/User";
 

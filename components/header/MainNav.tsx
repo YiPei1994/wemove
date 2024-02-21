@@ -7,7 +7,7 @@ import { FaUser } from "react-icons/fa6";
 import { useCurrentUser } from "../auth/useCurrentUser";
 import { IoIosLogOut } from "react-icons/io";
 import { useLogOut } from "../auth/useLogout";
-import { useDisplayNavbar } from "@/store/bearStore/displayUserFrom";
+import { useDisplayNavbar } from "@/store/useDisplayNavbar";
 
 function MainNav() {
   const path = usePathname();

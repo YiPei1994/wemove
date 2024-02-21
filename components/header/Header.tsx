@@ -3,9 +3,9 @@
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaTimes } from "react-icons/fa";
 import MainNav from "./MainNav";
-import { useDisplayNavbar } from "@/store/bearStore/displayUserFrom";
 
 import Logo from "./Logo";
+import { useDisplayNavbar } from "@/store/useDisplayNavbar";
 
 function Header() {
   const { displayNavbar, toggleDisplayNavbar } = useDisplayNavbar();
