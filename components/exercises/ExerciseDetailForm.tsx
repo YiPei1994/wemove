@@ -109,7 +109,7 @@ function ExerciseDetailForm({
     const updatedSets = sets.map((set) => {
       return { ...set, weight: allWeights };
     });
-    set.weight = allWeights;
+
     setSets(updatedSets);
   }
   function handleSetAllReps(e: React.MouseEvent<HTMLButtonElement>) {
@@ -118,7 +118,7 @@ function ExerciseDetailForm({
     const updatedSets = sets.map((set) => {
       return { ...set, rep: allReps };
     });
-    set.rep = allReps;
+
     setSets(updatedSets);
   }
 
@@ -157,6 +157,7 @@ function ExerciseDetailForm({
       avg_reps: +avgReps,
     };
 
+    console.log(newExerciseData);
     addExerciseData(
       { newExerciseData, dataTable },
       {
@@ -224,6 +225,7 @@ function ExerciseDetailForm({
               type="number"
               className="px-2 py-1 w-1/4 my-2"
               placeholder={exercise.metric}
+              value={set.weight}
               required
               onChange={(e) => handleUpdatePerformance(e, set.id)}
             />
@@ -233,6 +235,7 @@ function ExerciseDetailForm({
               type="number"
               className="px-2 py-1 w-1/4"
               placeholder={exercise.unit}
+              value={set.rep}
               required
               onChange={(e) => handleUpdateReps(e, set.id)}
             />

@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 type DisplayExerciseEditForm = {
   displayExerciseEditForm: boolean;
-  toggleDisplayExerciseEditForm: () => void;
+  toggleDisplayExerciseEditForm: (b?: boolean) => void;
 };
 
 export const useDisplayExerciseEditForm = create<DisplayExerciseEditForm>(

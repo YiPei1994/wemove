@@ -18,13 +18,17 @@ const GymExercisepage = ({ params }: pageProps) => {
   const query = params.typeslug;
   const router = useRouter();
   const { user } = useCurrentUser();
-  const { displayExerciseEditForm } = useDisplayExerciseEditForm();
+  const { displayExerciseEditForm, toggleDisplayExerciseEditForm } =
+    useDisplayExerciseEditForm();
 
   const { data: exercises, isLoading } = useQuery({
     queryKey: [`${query}`, query],
     queryFn: () => getAllExercisesOfType(query, user?.id),
   });
-
+  function handleBack() {
+    router.back();
+    toggleDisplayExerciseEditForm(false);
+  }
   if (isLoading) return <Spinner />;
 
   if (!exercises) return;
@@ -34,27 +38,25 @@ const GymExercisepage = ({ params }: pageProps) => {
         <h1 className="text-2xl">All {query} exercises</h1>
         {exercises.length === 0 && <p>No exercise yet, lets add some!</p>}
       </header>
-      <div className="flex flex-wrap gap-4">
-        {exercises.map((exercise) => (
-          <>
-            <Link
-              key={exercise.slug}
-              className="px-4 py-2  bg-[#FFE4E3] text-[#be3144] w-full rounded-sm uppercase "
-              href={`/gym/${query}/${exercise.slug}`}
-            >
-              <Exercise exercise={exercise} query={query} />
-            </Link>
-            {displayExerciseEditForm && (
-              <ExerciseEditForm exercise={exercise} />
-            )}
-          </>
-        ))}
-      </div>
+
+      {exercises.map((exercise) => (
+        <div className="flex flex-wrap gap-4" key={exercise.slug}>
+          <Link
+            className="px-4 py-2  bg-[#FFE4E3] text-[#be3144] w-full rounded-sm uppercase "
+            href={`/gym/${query}/${exercise.slug}`}
+          >
+            <Exercise exercise={exercise} query={query} />
+          </Link>
+          {displayExerciseEditForm && (
+            <ExerciseEditForm exercise={exercise} query={query} />
+          )}
+        </div>
+      ))}
 
       <div className="w-4/5 justify-between items-center flex m-auto">
         <button
           className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
-          onClick={() => router.back()}
+          onClick={handleBack}
         >
           Back
         </button>

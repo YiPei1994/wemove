@@ -25,9 +25,10 @@ select option {
   background: #ffe4e3;
   color: #be3144;
   border-radius: 2px;
+  outline: none;
 }
 
 input::placeholder,
 select::placeholder {
-  color: #be3144;
+  color: #be314470;
 }

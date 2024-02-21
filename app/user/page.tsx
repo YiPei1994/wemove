@@ -1,7 +1,8 @@
 "use client";
-import { useDisplayUserForm } from "../../store/useDisplayUserFrom";
+
 import UserForm from "@/components/user/UserForm";
 import User from "@/components/user/User";
+import { useDisplayUserForm } from "@/store/useDisplayUserFrom";
 
 function Userpage() {
   const { displayUserForm } = useDisplayUserForm();

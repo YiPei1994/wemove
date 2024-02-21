@@ -6,6 +6,7 @@ import {
 } from "@/lib/ExerciseType";
 import supabase, { DEFAULT_USERID } from "./supabase";
 
+/***** fetch all exercise from one type *******/
 export const getAllExercisesOfType = async (
   query: string,
   owner: string | undefined
@@ -23,6 +24,7 @@ export const getAllExercisesOfType = async (
   return data as ExerciseType[];
 };
 
+/***** fetch data from one exercise ******/
 export const getExerciseData = async (
   userId: string | undefined,
   exercise: string,
@@ -46,6 +48,7 @@ export const getExerciseData = async (
     }
 
     if (type === "last") {
+      /*** fetch last recorded data ******/
       const { data, error } = await supabase
         .from(exerciseData)
         .select()
@@ -60,6 +63,7 @@ export const getExerciseData = async (
 
       return data as ExerciseDataType[];
     } else if (type === "best") {
+      /**** fetch best recorded data ******/
       const { data, error } = await supabase
         .from(exerciseData)
         .select()
@@ -74,6 +78,7 @@ export const getExerciseData = async (
 
       return data as ExerciseDataType[];
     } else if (type === "all") {
+      /*** fetch last 30 recorded data */
       const { data, error } = await supabase
         .from(exerciseData)
         .select("*")
@@ -94,22 +99,7 @@ export const getExerciseData = async (
   }
 };
 
-export const getExerciseByExerciseId = async (
-  exercideId: string,
-  query: string
-) => {
-  const { data, error } = await supabase
-    .from(query)
-    .select()
-    .eq("slug", exercideId)
-    .single();
-
-  if (error) {
-    throw new Error(error.message || "Could not find searched exercise.");
-  }
-
-  return (data as ExerciseType) || null;
-};
+/****** add new exercise ********/
 
 export const addNewExercise = async (
   newExercise: NewExercise,
@@ -135,7 +125,7 @@ export const addNewExercise = async (
     throw new Error("Exercise already exists.");
   }
 };
-
+/******* add new data to specific exercise *********/
 export const addNewExerciseData = async (
   newExerciseData: ExerciseDataFormType,
   type: string
@@ -151,6 +141,42 @@ export const addNewExerciseData = async (
   return data;
 };
 
+/**** fetch specific exercise using unique slugID */
+
+export const getExerciseByExerciseId = async (
+  exercideId: string,
+  query: string
+) => {
+  const { data, error } = await supabase
+    .from(query)
+    .select()
+    .eq("slug", exercideId)
+    .single();
+
+  if (error) {
+    throw new Error(error.message || "Could not find searched exercise.");
+  }
+
+  return (data as ExerciseType) || null;
+};
+
+/**** edit specifici exercise *********/
+export const editExercise = async (
+  editedExercise: ExerciseType,
+  query: string
+) => {
+  const { data, error } = await supabase
+    .from(query)
+    .update({ ...editedExercise })
+    .eq("exercise_id", editedExercise.exercise_id)
+    .select();
+
+  if (error) {
+    throw new Error(error.message || "couldnt edit exercise");
+  }
+
+  return data as ExerciseType[];
+};
 /**** delete a specific exercise ********/
 
 export const deleteExercise = async (query: string, id: number) => {
