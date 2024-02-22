@@ -69,9 +69,10 @@ function ExerciseDetailForm({
     const newValue = parseFloat(e.target.value);
     if (isNaN(newValue)) return;
 
+    const updatedValue = newValue === 0 ? 0 : newValue;
     const updatedSets = sets.map((set) => {
       if (set.id === id) {
-        return { ...set, weight: newValue };
+        return { ...set, weight: updatedValue };
       }
       return set;
     });
@@ -87,10 +88,10 @@ function ExerciseDetailForm({
 
     const newValue = parseFloat(e.target.value);
     if (isNaN(newValue)) return;
-
+    const updatedValue = newValue === 0 ? 0 : newValue;
     const updatedSets = sets.map((set) => {
       if (set.id === id) {
-        return { ...set, rep: newValue };
+        return { ...set, rep: updatedValue };
       }
       return set;
     });
@@ -157,7 +158,6 @@ function ExerciseDetailForm({
       avg_reps: +avgReps,
     };
 
-    console.log(newExerciseData);
     addExerciseData(
       { newExerciseData, dataTable },
       {
@@ -225,7 +225,7 @@ function ExerciseDetailForm({
               type="number"
               className="px-2 py-1 w-1/4 my-2"
               placeholder={exercise.metric}
-              value={set.weight}
+              value={set.weight === 0 ? "" : set.weight}
               required
               onChange={(e) => handleUpdatePerformance(e, set.id)}
             />
@@ -235,7 +235,7 @@ function ExerciseDetailForm({
               type="number"
               className="px-2 py-1 w-1/4"
               placeholder={exercise.unit}
-              value={set.rep}
+              value={set.rep === 0 ? "" : set.rep}
               required
               onChange={(e) => handleUpdateReps(e, set.id)}
             />
