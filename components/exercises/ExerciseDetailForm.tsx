@@ -24,19 +24,37 @@ type Set = {
   rep: number;
 };
 
-const defaultSets = [
-  { id: uuidv4(), weight: 0, rep: 0 },
-  { id: uuidv4(), weight: 0, rep: 0 },
-  { id: uuidv4(), weight: 0, rep: 0 },
-];
-
-const defaultCardioSets = [{ id: uuidv4(), weight: 0, rep: 0 }];
-
 const set = {
   id: uuidv4(),
   weight: 0,
   rep: 0,
 };
+const defaultSets = [
+  {
+    id: uuidv4(),
+    weight: 0,
+    rep: 0,
+  },
+  {
+    id: uuidv4(),
+    weight: 0,
+    rep: 0,
+  },
+  {
+    id: uuidv4(),
+    weight: 0,
+    rep: 0,
+  },
+];
+
+const defaultCardioSets = [
+  {
+    id: uuidv4(),
+    weight: 0,
+    rep: 0,
+  },
+];
+
 function ExerciseDetailForm({
   slug,
   userId,
@@ -47,9 +65,8 @@ function ExerciseDetailForm({
   const [sets, setSets] = useState<Set[]>(
     type === "cardio" ? defaultCardioSets : defaultSets
   );
-
-  const [allReps, setAllReps] = useState(0);
   const [allWeights, setAllWeights] = useState(0);
+  const [allReps, setAllReps] = useState(0);
 
   const { addExerciseData } = useAddExerciseData();
   const dataTable = `${type}Data`;
@@ -57,7 +74,14 @@ function ExerciseDetailForm({
 
   function handleAddSet(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    setSets([...sets, { id: uuidv4(), weight: 0, rep: 0 }]);
+    setSets([
+      ...sets,
+      {
+        id: uuidv4(),
+        weight: 0,
+        rep: 0,
+      },
+    ]);
   }
 
   function handleUpdatePerformance(
@@ -66,13 +90,12 @@ function ExerciseDetailForm({
   ) {
     e.preventDefault();
 
-    const newValue = parseFloat(e.target.value);
+    const newValue = e.target.value === "" ? 0 : parseFloat(e.target.value);
     if (isNaN(newValue)) return;
 
-    const updatedValue = newValue === 0 ? 0 : newValue;
     const updatedSets = sets.map((set) => {
       if (set.id === id) {
-        return { ...set, weight: updatedValue };
+        return { ...set, weight: newValue };
       }
       return set;
     });
@@ -86,12 +109,12 @@ function ExerciseDetailForm({
   ) {
     e.preventDefault();
 
-    const newValue = parseFloat(e.target.value);
+    const newValue = e.target.value === "" ? 0 : parseFloat(e.target.value);
     if (isNaN(newValue)) return;
-    const updatedValue = newValue === 0 ? 0 : newValue;
+
     const updatedSets = sets.map((set) => {
       if (set.id === id) {
-        return { ...set, rep: updatedValue };
+        return { ...set, rep: newValue };
       }
       return set;
     });
