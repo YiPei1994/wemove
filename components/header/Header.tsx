@@ -1,7 +1,8 @@
 "use client";
 
-import { GiHamburgerMenu } from "react-icons/gi";
-import { FaTimes } from "react-icons/fa";
+import { HiOutlineListBullet } from "react-icons/hi2";
+import { HiOutlineXMark } from "react-icons/hi2";
+
 import MainNav from "./MainNav";
 
 import Logo from "./Logo";
@@ -15,9 +16,9 @@ function Header() {
       <Logo />
       <button className="block lg:hidden" onClick={() => toggleDisplayNavbar()}>
         {displayNavbar ? (
-          <FaTimes className="text-[#53B9C7] " />
+          <HiOutlineXMark className="text-[#53B9C7] " />
         ) : (
-          <GiHamburgerMenu />
+          <HiOutlineListBullet />
         )}
       </button>
       <nav

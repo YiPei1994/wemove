@@ -1,6 +1,7 @@
 "use client";
 
-import { FaUserDoctor } from "react-icons/fa6";
+import { HiOutlineDocumentText } from "react-icons/hi2";
+
 import { useReadUser } from "./useReadUser";
 
 import Spinner from "../Spinner";
@@ -14,7 +15,7 @@ function User() {
   return (
     <div className="flex flex-col justify-center items-center w-full">
       <div className="flex items-center justify-center ">
-        <FaUserDoctor className="text-5xl text-[#53B9C7] " />
+        <HiOutlineDocumentText className="text-5xl text-[#53B9C7] " />
       </div>
       {!userData && (
         <p className="m-4">

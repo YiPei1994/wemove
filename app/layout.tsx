@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
 import Header from "@/components/header/Header";
 import { ReactQueryClientProvider } from "@/store/reactQuery/ReactQueryProvider";
 import { Toaster } from "react-hot-toast";
-
-const inter = Inter({ subsets: ["latin"] });
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,9 +17,7 @@ export default function RootLayout({
   return (
     <ReactQueryClientProvider>
       <html lang="en">
-        <body
-          className={`${inter.className} bg-gradient-to-r from-[#CF8787] to-[#FFE4E3] 	`}
-        >
+        <body className={`bg-[#FFE4E3]`}>
           <Toaster
             toastOptions={{
               className: "",

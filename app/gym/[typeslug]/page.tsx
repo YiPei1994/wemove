@@ -27,7 +27,6 @@ const GymExercisepage = ({ params }: pageProps) => {
   });
   function handleBack() {
     router.back();
-    toggleDisplayExerciseEditForm(false);
   }
   if (isLoading) return <Spinner />;
 

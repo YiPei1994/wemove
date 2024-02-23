@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
-import { FaUser } from "react-icons/fa6";
+import { HiOutlineUser } from "react-icons/hi2";
+
 import { useCurrentUser } from "../auth/useCurrentUser";
-import { IoIosLogOut } from "react-icons/io";
+import { HiOutlineArrowRightOnRectangle } from "react-icons/hi2";
+
 import { useLogOut } from "../auth/useLogout";
 import { useDisplayNavbar } from "@/store/useDisplayNavbar";
 
@@ -55,7 +57,7 @@ function MainNav() {
             } flex items-center gap-4`}
             onClick={handleLogout}
           >
-            <IoIosLogOut className="text-[#53B9C7] " />
+            <HiOutlineArrowRightOnRectangle className="text-[#53B9C7] " />
             Log out
           </button>
         ) : (
@@ -65,7 +67,7 @@ function MainNav() {
             } flex items-center gap-4`}
             href="/login"
           >
-            <FaUser className="text-[#53B9C7] " /> Log in
+            <HiOutlineUser className="text-[#53B9C7] " /> Log in
           </Link>
         )}
       </li>

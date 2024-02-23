@@ -98,6 +98,7 @@ function NewExerciseForm({ params }: NewExerciseFormProps) {
         <div className="w-4/5 justify-between items-center flex m-auto">
           <button
             className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
+            type="reset"
             onClick={() => router.back()}
           >
             Back

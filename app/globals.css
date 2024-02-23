@@ -21,7 +21,8 @@ body {
 
 input,
 select,
-select option {
+select option,
+textarea {
   background: #ffe4e3;
   color: #be3144;
   border-radius: 2px;
@@ -29,6 +30,7 @@ select option {
 }
 
 input::placeholder,
-select::placeholder {
+select::placeholder,
+textarea::placeholder {
   color: #be314470;
 }

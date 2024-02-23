@@ -1,8 +1,8 @@
 import { ExerciseType } from "@/lib/ExerciseType";
 import Image from "next/image";
 import React, { useState } from "react";
-import { MdEditSquare } from "react-icons/md";
-import { RiDeleteBin4Fill } from "react-icons/ri";
+import { HiOutlinePencil } from "react-icons/hi2";
+import { HiOutlineTrash } from "react-icons/hi2";
 import { useDeleteExercise } from "./useDeleteExercise";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDisplayExerciseEditForm } from "@/store/useExerciseEditForm";
@@ -21,7 +21,7 @@ function Exercise({ exercise, query }: ExerciseProps) {
     id: number
   ) {
     e.preventDefault();
-    console.log(id);
+
     deleting(
       { query, id },
       {
@@ -46,13 +46,15 @@ function Exercise({ exercise, query }: ExerciseProps) {
           width={24}
           height={24}
         />
-        <span className="text-md">
+        <span className="text-md truncate">
           {exercise.exercise_name.replaceAll("_", " ")}{" "}
         </span>{" "}
         <div className="flex gap-4 items-center ml-auto text-2xl">
-          <MdEditSquare onClick={(e) => handleEdit(e, exercise.exercise_id)} />
+          <HiOutlinePencil
+            onClick={(e) => handleEdit(e, exercise.exercise_id)}
+          />
 
-          <RiDeleteBin4Fill
+          <HiOutlineTrash
             onClick={(e) => handleDelete(e, exercise.exercise_id)}
           />
         </div>

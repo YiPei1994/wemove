@@ -1,10 +1,11 @@
+import { DEFAULT_USERID } from "@/helpers/constants";
 import {
   ExerciseDataFormType,
   ExerciseDataType,
   ExerciseType,
   NewExercise,
 } from "@/lib/ExerciseType";
-import supabase, { DEFAULT_USERID } from "./supabase";
+import supabase from "./supabase";
 
 /***** fetch all exercise from one type *******/
 export const getAllExercisesOfType = async (

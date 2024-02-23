@@ -1,6 +1,7 @@
 "use client";
 
-import { MdCalculate } from "react-icons/md";
+import { HiOutlineCalculator } from "react-icons/hi2";
+
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -124,7 +125,7 @@ function UserForm() {
           <div className="flex justify-between">
             <label htmlFor="bmr">BMR:</label>
             <button type="button" onClick={handleCalculateBMR}>
-              <MdCalculate className="text-3xl text-[#53B9C7]" />
+              <HiOutlineCalculator className="text-3xl text-[#53B9C7]" />
             </button>
           </div>
           <input
@@ -153,7 +154,7 @@ function UserForm() {
           <div className="flex justify-between ">
             <label htmlFor="calories">Total daily calories:</label>
             <button type="button" onClick={handleCalculateCalories}>
-              <MdCalculate className="text-3xl text-[#53B9C7]" />
+              <HiOutlineCalculator className="text-3xl text-[#53B9C7]" />
             </button>
           </div>
           <input

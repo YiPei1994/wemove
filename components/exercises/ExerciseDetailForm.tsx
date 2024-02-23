@@ -2,13 +2,14 @@
 
 import { ExerciseDataFormType, ExerciseType } from "@/lib/ExerciseType";
 import React, { FormEvent, useState } from "react";
-import { CiSquarePlus } from "react-icons/ci";
 import { useAddExerciseData } from "./useAddExerciseData";
 import { useQueryClient } from "@tanstack/react-query";
-import { BiMinusCircle } from "react-icons/bi";
 import { v4 as uuidv4 } from "uuid";
-import { MdTimer } from "react-icons/md";
-import { GiStrong } from "react-icons/gi";
+import { HiOutlineTrash } from "react-icons/hi2";
+
+import { HiOutlinePlus } from "react-icons/hi2";
+import { HiOutlineChartBar } from "react-icons/hi2";
+import { HiOutlineTrophy } from "react-icons/hi2";
 
 type ExerciseDetailFromProps = {
   type: string;
@@ -192,16 +193,13 @@ function ExerciseDetailForm({
     );
   }
   return (
-    <form
-      className="flex flex-col gap-4 border border-[#ffe4e3] px-2 py-4"
-      onSubmit={handleSubmit}
-    >
+    <form className="flex flex-col gap-4  px-2 py-4" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-2">
-        <h4 className="text-center w-full">Performances</h4>
+        <h4 className="text-center w-full">Training sets</h4>
         <div className="flex justify-between flex-col gap-4">
           <div className="flex items-center justify-center gap-4">
             <button type="button" onClick={handleAddSet}>
-              <CiSquarePlus className="text-5xl text-[#53B9C7] " />
+              <HiOutlinePlus className="text-5xl text-[#53B9C7] " />
             </button>
           </div>
           <div className="flex items-center justify-between w-full gap-4">
@@ -217,7 +215,7 @@ function ExerciseDetailForm({
                 className="text-[#53B9C7] py-1 px-1 text-xl border-[#53B9C7] border active:text-[#FFE4E3] active:border-[#FFE4E3] active:bg-[#53B9C7] hover:text-[#FFE4E3] hover:border-[#FFE4E3] hover:bg-[#53B9C7] rounded-sm"
                 onClick={handleUseBodyweight}
               >
-                <GiStrong />
+                <HiOutlineTrophy />
               </button>
             </div>
 
@@ -226,7 +224,7 @@ function ExerciseDetailForm({
                 className="text-[#53B9C7] py-1 px-1 text-xl  border-[#53B9C7] border active:text-[#FFE4E3] active:border-[#FFE4E3] active:bg-[#53B9C7] hover:text-[#FFE4E3] hover:border-[#FFE4E3] hover:bg-[#53B9C7] rounded-sm"
                 onClick={handleSetAllReps}
               >
-                <MdTimer />
+                <HiOutlineChartBar />
               </button>
               <input
                 className="w-3/5 px-2"
@@ -263,7 +261,7 @@ function ExerciseDetailForm({
               onChange={(e) => handleUpdateReps(e, set.id)}
             />
             <button onClick={(e) => handleDeleteSet(e, set.id)}>
-              <BiMinusCircle className="text-2xl text-[#53B9C7]" />
+              <HiOutlineTrash className="text-2xl text-[#53B9C7]" />
             </button>
           </div>
         ))}
@@ -271,7 +269,8 @@ function ExerciseDetailForm({
 
       <div className="w-4/5 justify-between items-center flex m-auto">
         <button
-          className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
+          className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm "
+          type="reset"
           onClick={() => open(false)}
         >
           Close
