@@ -1,66 +1,90 @@
 "use client";
 
-import Link from "next/link";
-import { FormEvent, useState } from "react";
-import { useLogin } from "./useLogin";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
+import { userLoginSchema } from "@/lib/AuthType";
 import { useRouter } from "next/navigation";
+import { useLogin } from "./hooks/useLogin";
+import SignUp from "./SignUp";
 
-import Logo from "../header/Logo";
-
-function LogIn() {
-  const [email, setEmail] = useState("test@gmail.yp");
-  const [password, setPassword] = useState("testacc");
+export default function Login() {
   const { login } = useLogin();
-  const route = useRouter();
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (!email || !password) return;
+  const router = useRouter();
+  const { toast } = useToast();
+  const form = useForm<z.infer<typeof userLoginSchema>>({
+    resolver: zodResolver(userLoginSchema),
+    defaultValues: {
+      email: "test@gmail.yp",
+      password: "testacc",
+    },
+  });
 
-    login(
-      { email, password },
-      {
-        onSuccess: () => {
-          route.push("/");
-        },
-      }
-    );
+  function onSubmit(data: z.infer<typeof userLoginSchema>) {
+    if (!data) return;
+    login(data, {
+      onSuccess: () => {
+        router.push("/");
+        toast({
+          description: "Log-in success!",
+        });
+      },
+      onError: (err: any) => {
+        toast({
+          title: "Log-in failed!",
+          description: err.message,
+        });
+      },
+    });
   }
+
   return (
-    <div className="flex justify-center flex-col gap-4 m-4 p-10 items-center mt-10 bg-[#be3144]">
-      <Logo />
-      <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-2">
-          <input
-            className="p-2 w-full"
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <input
-            className="p-2 w-full"
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className="flex items-center justify-between gap-2 text-center">
-          <button className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm">
-            Log in
-          </button>
-          <Link
-            className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
-            href="/login/signup"
-          >
-            Sign up
-          </Link>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="email" {...field} />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input placeholder="password" type="password" {...field} />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="flex items-center gap-4">
+          <Button type="submit">Log In</Button>
         </div>
       </form>
-    </div>
+    </Form>
   );
 }
-
-export default LogIn;

@@ -1,13 +1,13 @@
 "use client";
 
 import React, { ReactNode } from "react";
-import { useCurrentUser } from "../auth/useCurrentUser";
 import { formatDate } from "@/helpers/functions";
 import { LOCALE, NOW } from "@/helpers/constants";
 import { useQuery } from "@tanstack/react-query";
 import { getDailyGoals } from "@/servises/apiDailyGoals";
 import Spinner from "../Spinner";
 import Goal from "./Goal";
+import { useCurrentUser } from "../auth/hooks/useCurrentUser";
 
 type GoalListProps = {
   type: "daily" | "unfinished" | "finished";

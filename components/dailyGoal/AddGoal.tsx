@@ -3,13 +3,13 @@
 import { UserGoalType } from "@/lib/DailyGoalsType";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useCurrentUser } from "../auth/useCurrentUser";
 import { useCreateUserGoal } from "./hooks/useCreateUserGoal";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDisplayAddGoal } from "@/store/useDisplayAddGoal";
 import { formatDate } from "@/helpers/functions";
 import { LOCALE, NOW } from "@/helpers/constants";
 import { HiOutlineDocumentPlus } from "react-icons/hi2";
+import { useCurrentUser } from "../auth/hooks/useCurrentUser";
 
 type Data = {
   goal: string;
@@ -50,7 +50,7 @@ function AddGoal() {
     <>
       <button
         onClick={handleNewGoal}
-        className="w-full flex gap-4 items-center justify-center text-center p-4 uppercase bg-[#53B9C7] text-xl text-[#FFE4E3]"
+        className="w-full flex gap-4 items-center justify-center text-center p-4 uppercase  text-xl"
       >
         <span>Add goal</span> <HiOutlineDocumentPlus />
       </button>
@@ -61,7 +61,7 @@ function AddGoal() {
           displayAddGoal
             ? "max-h-[250px] opacity-100 pointer-events-auto py-4"
             : "max-h-[0px] opacity-0 pointer-events-none py-0"
-        } transition-all duration-300 flex flex-wrap items-center justify-between gap-4 border border-[#ffe4e3] px-2 `}
+        } transition-all duration-300 flex flex-wrap items-center justify-between gap-4 border  px-2 `}
       >
         <div className="w-full flex gap-2 justify-between items-center">
           <input
@@ -90,15 +90,13 @@ function AddGoal() {
         ></textarea>
         <div className="w-4/5 justify-between items-center flex m-auto">
           <button
-            className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm "
+            className="px-6 py-1 w-auto  rounded-sm "
             type="reset"
             onClick={() => toggleDisplayAddGoal(false)}
           >
             Close
           </button>
-          <button className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm">
-            Add
-          </button>
+          <button className="px-6 py-1 w-auto  rounded-sm">Add</button>
         </div>
       </form>
     </>

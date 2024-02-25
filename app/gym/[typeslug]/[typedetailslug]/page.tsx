@@ -1,18 +1,15 @@
 "use client";
 
 import Spinner from "@/components/Spinner";
-import { useCurrentUser } from "@/components/auth/useCurrentUser";
+import { useCurrentUser } from "@/components/auth/hooks/useCurrentUser";
 import ExerciseDetailBlock from "@/components/exercises/ExerciseDetail";
 import ExerciseDetailForm from "@/components/exercises/ExerciseDetailForm";
 import ExercisesDataDetails from "@/components/exercises/ExercisesDataDetails";
-
 import {
   getExerciseByExerciseId,
   getExerciseData,
 } from "@/servises/apiExercise";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
-
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -60,7 +57,7 @@ const ExerciseDetail = ({ params }: PageProps) => {
     return;
 
   return (
-    <div className="bg-[#BE3144] my-6 h-auto w-[90%] mx-auto rounded-sm p-4 flex flex-col gap-6 justify-center items-center">
+    <div className=" my-6 h-auto w-[90%] mx-auto rounded-sm p-4 flex flex-col gap-6 justify-center items-center">
       <h2 className="text-2xl text-center">
         Performance of{" "}
         {exercise?.exercise_name.toUpperCase().replaceAll("_", " ")}{" "}
@@ -112,13 +109,13 @@ const ExerciseDetail = ({ params }: PageProps) => {
       {!openFrom && (
         <div className="w-4/5 justify-between items-center flex m-auto">
           <button
-            className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
+            className="px-6 py-1 w-auto  rounded-sm"
             onClick={() => router.back()}
           >
             Back
           </button>
           <button
-            className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
+            className="px-6 py-1 w-auto  rounded-sm"
             onClick={() => setOpenForm((d) => !d)}
           >
             Track

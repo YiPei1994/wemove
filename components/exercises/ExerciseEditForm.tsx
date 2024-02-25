@@ -59,7 +59,7 @@ function ExerciseEditForm({ exercise, query }: ExerciseEditFormProps) {
         />
       </div>
 
-      <button className="bg-[#53B9C7] text-[#FFE4E3] px-6 py-1">Edit</button>
+      <button className="  px-6 py-1">Edit</button>
     </form>
   );
 }

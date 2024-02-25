@@ -199,7 +199,7 @@ function ExerciseDetailForm({
         <div className="flex justify-between flex-col gap-4">
           <div className="flex items-center justify-center gap-4">
             <button type="button" onClick={handleAddSet}>
-              <HiOutlinePlus className="text-5xl text-[#53B9C7] " />
+              <HiOutlinePlus className="text-5xl " />
             </button>
           </div>
           <div className="flex items-center justify-between w-full gap-4">
@@ -212,7 +212,7 @@ function ExerciseDetailForm({
                 onChange={(e) => setAllWeights(+e.target.value)}
               />
               <button
-                className="text-[#53B9C7] py-1 px-1 text-xl border-[#53B9C7] border active:text-[#FFE4E3] active:border-[#FFE4E3] active:bg-[#53B9C7] hover:text-[#FFE4E3] hover:border-[#FFE4E3] hover:bg-[#53B9C7] rounded-sm"
+                className="py-1 px-1 text-xl "
                 onClick={handleUseBodyweight}
               >
                 <HiOutlineTrophy />
@@ -221,7 +221,7 @@ function ExerciseDetailForm({
 
             <div className="flex justify-center  w-1/2 gap-2">
               <button
-                className="text-[#53B9C7] py-1 px-1 text-xl  border-[#53B9C7] border active:text-[#FFE4E3] active:border-[#FFE4E3] active:bg-[#53B9C7] hover:text-[#FFE4E3] hover:border-[#FFE4E3] hover:bg-[#53B9C7] rounded-sm"
+                className="py-1 px-1 text-xl  "
                 onClick={handleSetAllReps}
               >
                 <HiOutlineChartBar />
@@ -261,7 +261,7 @@ function ExerciseDetailForm({
               onChange={(e) => handleUpdateReps(e, set.id)}
             />
             <button onClick={(e) => handleDeleteSet(e, set.id)}>
-              <HiOutlineTrash className="text-2xl text-[#53B9C7]" />
+              <HiOutlineTrash className="text-2xl " />
             </button>
           </div>
         ))}
@@ -269,15 +269,13 @@ function ExerciseDetailForm({
 
       <div className="w-4/5 justify-between items-center flex m-auto">
         <button
-          className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm "
+          className="px-6 py-1 w-auto  rounded-sm "
           type="reset"
           onClick={() => open(false)}
         >
           Close
         </button>
-        <button className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm">
-          Add
-        </button>
+        <button className="px-6 py-1 w-auto  rounded-sm">Add</button>
       </div>
     </form>
   );

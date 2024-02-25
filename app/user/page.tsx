@@ -7,7 +7,7 @@ import { useDisplayUserForm } from "@/store/useDisplayUserFrom";
 function Userpage() {
   const { displayUserForm } = useDisplayUserForm();
   return (
-    <div className="bg-[#BE3144] my-4 h-auto w-[90%] mx-auto rounded-sm p-4 flex flex-col gap-6">
+    <div className=" my-4 h-auto w-[90%] mx-auto rounded-sm p-4 flex flex-col gap-6">
       <header className="text-center w-auto text-3xl">
         Lets set up your data!
       </header>

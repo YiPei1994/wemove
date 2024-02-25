@@ -1,11 +1,15 @@
 import { z } from "zod";
 
-export type UserLogin = {
-  email: string;
-  password: string;
-};
+export const userLoginSchema = z.object({
+  email: z.string().min(2, {
+    message: "Email must be at least 2 characters.",
+  }),
+  password: z.string().min(6, {
+    message: "Password need to be at least 6 characters",
+  }),
+});
 
-export const userAuthSchema = z
+export const userRegisterSchema = z
   .object({
     email: z.string().email(),
     password: z
@@ -18,4 +22,6 @@ export const userAuthSchema = z
     path: ["confirmPassword"],
   });
 
-export type UserAuthSchema = z.infer<typeof userAuthSchema>;
+export type UserAuthSchema = z.infer<typeof userRegisterSchema>;
+
+export type UserLogin = z.infer<typeof userLoginSchema>;

@@ -64,14 +64,11 @@ function Goal({ goal: userGoal, type }: GoalProps) {
         </div>
         <div className="flex gap-4">
           {type !== "finished" && (
-            <button
-              className="text-3xl text-[#53B9C7] "
-              onClick={handleComplete}
-            >
+            <button className="text-3xl " onClick={handleComplete}>
               <HiOutlineCheck />
             </button>
           )}
-          <button className="text-3xl text-[#53B9C7]" onClick={handleDelete}>
+          <button className="text-3xl " onClick={handleDelete}>
             <HiOutlineTrash />
           </button>
         </div>

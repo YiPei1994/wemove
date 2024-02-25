@@ -3,19 +3,18 @@ import Link from "next/link";
 
 function Logo() {
   return (
-    <div className="flex items-center gap-4">
-      {" "}
-      <Link href="/">
-        <Image
-          loading="lazy"
-          src="/otherIcons/logo.png"
-          alt="chest"
-          width={24}
-          height={24}
-        />
-      </Link>
-      <span>MoveIn</span>
-    </div>
+    <Link href="/" className="flex items-center gap-4 ">
+      <Image
+        loading="lazy"
+        src="/otherIcons/logo.png"
+        alt="chest"
+        width={24}
+        height={24}
+      />
+      <p>
+        Re<span className="text-primary">Link</span>
+      </p>
+    </Link>
   );
 }
 

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Header from "@/components/header/Header";
 import { ReactQueryClientProvider } from "@/store/reactQuery/ReactQueryProvider";
-import { Toaster } from "react-hot-toast";
 import "./globals.css";
+import { ThemeProvider } from "@/store/shadcd/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,19 +18,17 @@ export default function RootLayout({
   return (
     <ReactQueryClientProvider>
       <html lang="en">
-        <body className={`bg-[#FFE4E3]`}>
-          <Toaster
-            toastOptions={{
-              className: "",
-              style: {
-                border: "1px solid #713200",
-                padding: "16px",
-                color: "#713200",
-              },
-            }}
-          />
-          <Header />
-          {children}
+        <body className={``}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Header />
+            {children}
+            <Toaster />
+          </ThemeProvider>
         </body>
       </html>
     </ReactQueryClientProvider>

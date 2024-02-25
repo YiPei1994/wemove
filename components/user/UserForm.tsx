@@ -1,14 +1,13 @@
 "use client";
 
 import { HiOutlineCalculator } from "react-icons/hi2";
-
 import { useForm } from "react-hook-form";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserDataSchema, userDataSchema } from "@/lib/userType";
 import { useUpdateUserData } from "./useUpdateUserData";
 import { useDisplayUserForm } from "@/store/useDisplayUserFrom";
-import { useCurrentUser } from "../auth/useCurrentUser";
+import { useCurrentUser } from "../auth/hooks/useCurrentUser";
+
 function UserForm() {
   const {
     register,
@@ -74,7 +73,7 @@ function UserForm() {
     <>
       <h2 className="text-3xl text-center">User form</h2>
       <form
-        className="flex flex-col gap-4 border border-[#ffe4e3] px-2 py-4"
+        className="flex flex-col gap-4 border  px-2 py-4"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="flex flex-col gap-2">
@@ -125,7 +124,7 @@ function UserForm() {
           <div className="flex justify-between">
             <label htmlFor="bmr">BMR:</label>
             <button type="button" onClick={handleCalculateBMR}>
-              <HiOutlineCalculator className="text-3xl text-[#53B9C7]" />
+              <HiOutlineCalculator className="text-3xl " />
             </button>
           </div>
           <input
@@ -154,7 +153,7 @@ function UserForm() {
           <div className="flex justify-between ">
             <label htmlFor="calories">Total daily calories:</label>
             <button type="button" onClick={handleCalculateCalories}>
-              <HiOutlineCalculator className="text-3xl text-[#53B9C7]" />
+              <HiOutlineCalculator className="text-3xl " />
             </button>
           </div>
           <input

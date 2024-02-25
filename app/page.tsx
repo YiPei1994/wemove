@@ -1,16 +1,19 @@
 "use client";
-
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useCurrentUser } from "@/components/auth/useCurrentUser";
 import DailyGoal from "@/components/dailyGoal/DailyGoal";
+import { useCurrentUser } from "@/components/auth/hooks/useCurrentUser";
 
 export default function Home() {
-  const { isAutenticated } = useCurrentUser();
+  const { user } = useCurrentUser();
   const router = useRouter();
+  const isAutenticated = user?.role === "authenticated";
+  useEffect(() => {
+    if (!isAutenticated) {
+      router.push("/login");
+    }
+  }, [isAutenticated, router]);
 
-  if (!isAutenticated) {
-    router.push("/login");
-  }
   return (
     <>
       <main>

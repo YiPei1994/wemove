@@ -15,7 +15,7 @@ function User() {
   return (
     <div className="flex flex-col justify-center items-center w-full">
       <div className="flex items-center justify-center ">
-        <HiOutlineDocumentText className="text-5xl text-[#53B9C7] " />
+        <HiOutlineDocumentText className="text-5xl " />
       </div>
       {!userData && (
         <p className="m-4">
@@ -46,10 +46,7 @@ function User() {
           </div>
         </div>
       )}
-      <button
-        onClick={toggleUserForm}
-        className="px-6 py-1 w-auto bg-[#53B9C7] rounded-sm"
-      >
+      <button onClick={toggleUserForm} className="px-6 py-1 w-auto  rounded-sm">
         {userData ? "Update data" : "Add data"}{" "}
       </button>
     </div>

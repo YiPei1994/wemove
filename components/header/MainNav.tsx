@@ -1,37 +1,35 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React from "react";
-import { HiOutlineUser } from "react-icons/hi2";
-
-import { useCurrentUser } from "../auth/useCurrentUser";
-import { HiOutlineArrowRightOnRectangle } from "react-icons/hi2";
-
-import { useLogOut } from "../auth/useLogout";
 import { useDisplayNavbar } from "@/store/useDisplayNavbar";
 
+import { useCurrentUser } from "../auth/hooks/useCurrentUser";
+import UserOperations from "./UserOperations";
 function MainNav() {
   const path = usePathname();
   const { isAutenticated } = useCurrentUser();
-  const { logOut } = useLogOut();
-  const route = useRouter();
   const { toggleDisplayNavbar } = useDisplayNavbar();
-  function handleLogout() {
-    logOut();
-    route.push("/login");
-  }
+
   return (
     <ul className="flex flex-col justify-center items-center gap-4 lg:flex-row">
       <li onClick={toggleDisplayNavbar}>
-        <Link className={path === "/" ? "text-[#53B9C7]" : ""} href="/">
+        <Link
+          className={`${
+            path === "/" ? "text-primary bg-accent/50" : ""
+          }  px-4 py-2 rounded-md transition-all duration-300`}
+          href="/"
+        >
           Home
         </Link>
       </li>
 
       <li onClick={toggleDisplayNavbar}>
         <Link
-          className={path.startsWith("/gym") ? "text-[#53B9C7]" : ""}
+          className={`${
+            path === "/gym" ? "text-primary bg-accent/50" : ""
+          }  px-4 py-2 rounded-md transition-all duration-300`}
           href="/gym"
         >
           Gym
@@ -41,35 +39,17 @@ function MainNav() {
       {isAutenticated && (
         <li onClick={toggleDisplayNavbar}>
           <Link
-            className={path.startsWith("/user") ? "text-[#53B9C7]" : ""}
+            className={`${
+              path === "/user" ? "text-primary bg-accent/50" : ""
+            }  px-4 py-2 rounded-md transition-all duration-300`}
             href="/user"
           >
             User stats
           </Link>
         </li>
       )}
-
-      <li onClick={toggleDisplayNavbar}>
-        {isAutenticated ? (
-          <button
-            className={`${
-              path.startsWith("/graph") ? "text-[#53B9C7]" : ""
-            } flex items-center gap-4`}
-            onClick={handleLogout}
-          >
-            <HiOutlineArrowRightOnRectangle className="text-[#53B9C7] " />
-            Log out
-          </button>
-        ) : (
-          <Link
-            className={`${
-              path.startsWith("/graph") ? "text-[#53B9C7]" : ""
-            } flex items-center gap-4`}
-            href="/login"
-          >
-            <HiOutlineUser className="text-[#53B9C7] " /> Log in
-          </Link>
-        )}
+      <li>
+        <UserOperations />
       </li>
     </ul>
   );
