@@ -1,6 +1,6 @@
 import { ExerciseType } from "@/lib/ExerciseType";
 import React from "react";
-import { useEditExercise } from "./hooks/useEditExercise";
+
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -16,6 +16,7 @@ import { Input } from "../ui/input";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { toast } from "../ui/use-toast";
 import { useDisplayExerciseEditForm } from "@/store/useExerciseEditForm";
+import { useEditExercise } from "./hooks/useEditExercise";
 
 type ExerciseEditFormProps = {
   exercise: ExerciseType;
@@ -38,7 +39,7 @@ function ExerciseEditForm({ exercise, query }: ExerciseEditFormProps) {
       {
         onSuccess: () => {
           toast({
-            description: "Exercise updated!.",
+            description: "Exercise updated!",
           });
           queryClient.invalidateQueries({ queryKey: [query] });
           toggleDisplayExerciseEditForm(false);
