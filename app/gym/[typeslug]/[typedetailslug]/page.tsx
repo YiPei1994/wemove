@@ -5,13 +5,13 @@ import { useCurrentUser } from "@/components/auth/hooks/useCurrentUser";
 import ExerciseDetailBlock from "@/components/exercises/ExerciseDetail";
 import ExerciseDetailForm from "@/components/exercises/ExerciseDetailForm";
 import ExercisesDataDetails from "@/components/exercises/ExercisesDataDetails";
+import { Button } from "@/components/ui/button";
 import {
   getExerciseByExerciseId,
   getExerciseData,
 } from "@/servises/apiExercise";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 type PageProps = {
   params: {
@@ -26,7 +26,6 @@ const ExerciseDetail = ({ params }: PageProps) => {
   const { typeslug, typedetailslug } = params;
   const userId = user?.id;
   const exerciseData = `${typeslug}Data`;
-  const [openFrom, setOpenForm] = useState(false);
 
   const { data: lastExerciseData, isLoading: isLoadingLast } = useQuery({
     queryKey: [exerciseData, typedetailslug, userId, "last"],
@@ -60,14 +59,19 @@ const ExerciseDetail = ({ params }: PageProps) => {
     <div className=" my-6 h-auto w-[90%] mx-auto rounded-sm p-4 flex flex-col gap-6 justify-center items-center">
       <h2 className="text-2xl text-center">
         Performance of{" "}
-        {exercise?.exercise_name.toUpperCase().replaceAll("_", " ")}{" "}
+        <span className="text-primary">
+          {" "}
+          {exercise?.exercise_name.toUpperCase().replaceAll("_", " ")}{" "}
+        </span>
       </h2>
       {bestExerciseData.length === 0 &&
         lastExerciseData.length === 0 &&
         allExerciseData.length === 0 && <p>No records yet, start adding.</p>}
       {bestExerciseData.length !== 0 && (
         <div className="w-full">
-          <h4 className="text-center text-2xl">Best record</h4>
+          <h4 className="text-center text-2xl">
+            <span className="text-primary">Best</span> record
+          </h4>
 
           <ExerciseDetailBlock
             exerciseData={bestExerciseData}
@@ -78,7 +82,9 @@ const ExerciseDetail = ({ params }: PageProps) => {
       )}
       {lastExerciseData.length !== 0 && (
         <div className="w-full">
-          <h4 className="text-center text-2xl">Last record</h4>
+          <h4 className="text-center text-2xl">
+            <span className="text-primary">Last</span> record
+          </h4>
 
           <ExerciseDetailBlock
             exerciseData={lastExerciseData}
@@ -89,39 +95,30 @@ const ExerciseDetail = ({ params }: PageProps) => {
       )}
       {allExerciseData.length !== 0 && (
         <div className="w-full">
-          <h4 className="text-center text-2xl">Last 30 records</h4>
+          <h4 className="text-center text-2xl">
+            Last <span className="text-primary">30</span> records
+          </h4>
 
           <ExercisesDataDetails
             allExerciseData={allExerciseData}
             exercise={exercise}
+            type={typeslug}
           />
         </div>
       )}
-      {openFrom && (
-        <ExerciseDetailForm
-          type={typeslug}
-          slug={typedetailslug}
-          userId={userId}
-          open={setOpenForm}
-          exercise={exercise}
-        />
-      )}
-      {!openFrom && (
-        <div className="w-4/5 justify-between items-center flex m-auto">
-          <button
-            className="px-6 py-1 w-auto  rounded-sm"
-            onClick={() => router.back()}
-          >
-            Back
-          </button>
-          <button
-            className="px-6 py-1 w-auto  rounded-sm"
-            onClick={() => setOpenForm((d) => !d)}
-          >
-            Track
-          </button>
-        </div>
-      )}
+
+      <div className="w-4/5 justify-between items-center flex m-auto">
+        <Button onClick={() => router.back()}>Back</Button>
+
+        <Button asChild>
+          <ExerciseDetailForm
+            type={typeslug}
+            slug={typedetailslug}
+            userId={userId}
+            exercise={exercise}
+          />
+        </Button>
+      </div>
     </div>
   );
 };

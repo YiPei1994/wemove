@@ -25,10 +25,16 @@ function ExerciseDetailBlock({
         <div className="flex gap-4 items-center">
           <div className="flex justify-between items-center w-full">
             <span>{date} </span>
-            <span>
-              {avg_performance} {exercise.metric} with {avg_reps}{" "}
-              {exercise.unit}
-            </span>
+            {type !== "cardio" ? (
+              <span>
+                {avg_performance} {exercise.metric} x {avg_reps} {exercise.unit}
+              </span>
+            ) : (
+              <span>
+                {`${((+avg_performance * 10) / avg_reps).toFixed(2)}`} speed /
+                min{" "}
+              </span>
+            )}
           </div>
         </div>
       </div>

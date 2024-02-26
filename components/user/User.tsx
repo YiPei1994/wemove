@@ -2,7 +2,7 @@
 
 import { HiOutlineDocumentText } from "react-icons/hi2";
 
-import { useReadUser } from "./useReadUser";
+import { useReadUser } from "./hooks/useReadUser";
 
 import Spinner from "../Spinner";
 import { useDisplayUserForm } from "@/store/useDisplayUserFrom";

@@ -1,8 +1,18 @@
 "use client";
 
 import { useCurrentUser } from "@/components/auth/hooks/useCurrentUser";
-import { useAddExercise } from "@/components/exercises/useAddExercise";
+import { useAddExercise } from "@/components/exercises/hooks/useAddExercise";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { NewExercise } from "@/lib/ExerciseType";
+
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useRef, useState } from "react";
@@ -61,7 +71,7 @@ function NewExerciseForm({ params }: NewExerciseFormProps) {
       >
         <div className="flex flex-col gap-2 text-center w-full">
           <label htmlFor="exercise_name">Exercise name:</label>
-          <input
+          <Input
             id="exercise_name"
             type="text"
             placeholder="exercise name..."
@@ -72,7 +82,7 @@ function NewExerciseForm({ params }: NewExerciseFormProps) {
         </div>
         <div className="flex flex-col gap-2 text-center w-2/5">
           <label htmlFor="metric">Exercise metric:</label>
-          <input
+          <Input
             id="metric"
             type="text"
             placeholder="metric..."
@@ -83,27 +93,23 @@ function NewExerciseForm({ params }: NewExerciseFormProps) {
         </div>
         <div className="flex flex-col gap-2 text-center w-2/5">
           <label htmlFor="unit">Exercise length:</label>
-          <select
-            required
-            className="p-2 w-full"
-            value={unit}
-            onChange={(e) => setUnit(e.target.value)}
-          >
-            <option value="reps">Repeats</option>
-            <option value="mins">Minutes</option>
-            <option value="secs">Seconds</option>
-          </select>
+          <Select value={unit} onValueChange={(value) => setUnit(value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="unit" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="reps">Repeats</SelectItem>
+              <SelectItem value="mins">Minutes</SelectItem>
+              <SelectItem value="secs">Seconds</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="w-4/5 justify-between items-center flex m-auto">
-          <button
-            className="px-6 py-1 w-auto  rounded-sm"
-            type="reset"
-            onClick={() => router.back()}
-          >
+          <Button type="reset" onClick={() => router.back()}>
             Back
-          </button>
-          <button className="px-6 py-1 w-auto  rounded-sm">Add</button>
+          </Button>
+          <Button>Add</Button>
         </div>
       </form>
     </div>

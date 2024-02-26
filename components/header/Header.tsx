@@ -16,9 +16,9 @@ function Header() {
       <Logo />
       <button className="block lg:hidden" onClick={() => toggleDisplayNavbar()}>
         {displayNavbar ? (
-          <HiOutlineXMark className="" />
+          <HiOutlineXMark className="text-primary text-2xl" />
         ) : (
-          <HiOutlineListBullet />
+          <HiOutlineListBullet className="text-primary text-2xl" />
         )}
       </button>
 

@@ -4,7 +4,7 @@ import { HiOutlineCalculator } from "react-icons/hi2";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserDataSchema, userDataSchema } from "@/lib/userType";
-import { useUpdateUserData } from "./useUpdateUserData";
+import { useUpdateUserData } from "./hooks/useUpdateUserData";
 import { useDisplayUserForm } from "@/store/useDisplayUserFrom";
 import { useCurrentUser } from "../auth/hooks/useCurrentUser";
 

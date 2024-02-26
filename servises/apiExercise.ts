@@ -187,7 +187,26 @@ export const deleteExercise = async (query: string, id: number) => {
     .eq("exercise_id", id);
 
   if (error) {
-    throw new Error(error.message || "unable to delete");
+    throw new Error(error.message || "unable to delete exercise");
+  }
+  return data;
+};
+
+/***** delete a specific exercise data *********/
+
+export const deleteExerciseData = async (
+  query: string,
+  id: number,
+  userId: string
+) => {
+  const { data, error } = await supabase
+    .from(query)
+    .delete()
+    .eq("data_id", id)
+    .eq("userId", userId);
+
+  if (error) {
+    throw new Error(error.message || "unable to delete exercise data");
   }
   return data;
 };
