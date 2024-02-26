@@ -4,7 +4,7 @@ import GoalList from "./GoalList";
 
 function DailyGoal() {
   return (
-    <div className=" my-6 h-auto w-[90%] mx-auto rounded-sm p-4 py-8 flex flex-col gap-4">
+    <div className="h-auto w-[90%] mx-auto rounded-sm p-4  flex flex-col gap-4">
       <AddGoal />
       <div className="flex flex-col gap-2">
         <GoalList type="daily">Daily goals:</GoalList>

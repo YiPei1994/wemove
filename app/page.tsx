@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import DailyGoal from "@/components/dailyGoal/DailyGoal";
 import { useCurrentUser } from "@/components/auth/hooks/useCurrentUser";
+import Motto from "@/components/motto/Motto";
 
 export default function Home() {
   const { user } = useCurrentUser();
@@ -17,6 +18,7 @@ export default function Home() {
   return (
     <>
       <main>
+        <Motto />
         <DailyGoal />
       </main>
     </>
