@@ -3,7 +3,7 @@ import {
   ExerciseDataFormType,
   ExerciseDataType,
   ExerciseType,
-  NewExercise,
+  NewExerciseType,
 } from "@/lib/ExerciseType";
 import supabase from "./supabase";
 
@@ -103,7 +103,7 @@ export const getExerciseData = async (
 /****** add new exercise ********/
 
 export const addNewExercise = async (
-  newExercise: NewExercise,
+  newExercise: NewExerciseType,
   query: string
 ) => {
   const existingRow = await supabase

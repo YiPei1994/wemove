@@ -67,7 +67,6 @@ function ExercisesDataDetails({
                     onClick={() =>
                       handleDeleteExerciseData(data.data_id, data.userId)
                     }
-                    className="text-primary"
                   >
                     Delete
                   </Button>

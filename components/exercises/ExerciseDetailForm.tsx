@@ -205,6 +205,8 @@ function ExerciseDetailForm({
           });
           queryClient.invalidateQueries({ queryKey: [dataTable] });
           toggleDisplayExerciseDataForm(false);
+          setAllWeights(0);
+          setAllReps(0);
         },
       }
     );
