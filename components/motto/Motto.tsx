@@ -11,7 +11,7 @@ function Motto() {
     { text: "Dedication" },
   ];
   return (
-    <TypewriterEffectSmooth
+    <TypewriterEffect
       className="p-4 items-center justify-center text-xl"
       cursorClassName="bg-primary"
       words={words}

@@ -1,10 +1,10 @@
-import { UserDayType, UserGoalType } from "@/lib/DailyGoalsType";
+import { GoalType, UserDayType, UserGoalType } from "@/lib/DailyGoalsType";
 import supabase from "./supabase";
 
 /**** creating daily Goal ******/
-export const createUserGoal = async (goal: UserGoalType) => {
+export const createUserGoal = async (goal: GoalType) => {
   const { data, error } = await supabase
-    .from("dailyGoals")
+    .from(goal.daily === true ? "goals" : "dailyGoals")
     .insert([{ ...goal }])
     .select();
 
