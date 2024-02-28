@@ -18,6 +18,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { GoalType } from "@/lib/DailyGoalsType";
+import { formatDate } from "@/helpers/functions";
+import { LOCALE, NOW } from "@/helpers/constants";
+import { Textarea } from "../ui/textarea";
 
 function AddGoal() {
   const form = useForm<GoalType>({
@@ -38,18 +41,20 @@ function AddGoal() {
 
   function onSubmit(data: GoalType) {
     if (!data || !user) return;
-
+    const newDate = formatDate(LOCALE, NOW);
     const newGoal: GoalType = {
       goal: data.goal,
       description: data.description,
       daily: data.daily,
+      date: newDate,
       userId: user.id,
+      status: false,
     };
 
     creatingGoal(newGoal, {
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["goals"] });
-        queryClient.invalidateQueries({ queryKey: ["dailyGoals"] });
+        queryClient.invalidateQueries({ queryKey: ["permGoals"] });
+        queryClient.invalidateQueries({ queryKey: ["tempGoals"] });
         form.reset();
         toggleDisplayAddGoal();
       },
@@ -110,14 +115,18 @@ function AddGoal() {
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
-                  <Input placeholder="detail..." {...field} />
+                  <Textarea placeholder="detail..." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <div className="w-4/5 justify-between items-center flex m-auto">
-            <Button type="reset" onClick={() => toggleDisplayAddGoal(false)}>
+            <Button
+              variant="secondary"
+              type="reset"
+              onClick={() => toggleDisplayAddGoal(false)}
+            >
               Close
             </Button>
             <Button>Add</Button>

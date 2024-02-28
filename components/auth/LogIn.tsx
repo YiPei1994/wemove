@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,7 +17,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { userLoginSchema } from "@/lib/AuthType";
 import { useRouter } from "next/navigation";
 import { useLogin } from "./hooks/useLogin";
-import SignUp from "./SignUp";
 
 export default function Login() {
   const { login } = useLogin();
@@ -37,9 +35,6 @@ export default function Login() {
     login(data, {
       onSuccess: () => {
         router.push("/");
-        toast({
-          description: "Log-in success!",
-        });
       },
       onError: (err: any) => {
         toast({

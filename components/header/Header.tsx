@@ -14,13 +14,18 @@ function Header() {
   return (
     <header className="flex w-full justify-between items-center p-4 flex-wrap lg:flex-nowrap ">
       <Logo />
-      <button className="block lg:hidden" onClick={() => toggleDisplayNavbar()}>
-        {displayNavbar ? (
-          <HiOutlineXMark className="text-primary text-2xl" />
-        ) : (
-          <HiOutlineListBullet className="text-primary text-2xl" />
-        )}
-      </button>
+      {isAutenticated && (
+        <button
+          className="block lg:hidden"
+          onClick={() => toggleDisplayNavbar()}
+        >
+          {displayNavbar ? (
+            <HiOutlineXMark className="text-primary text-2xl" />
+          ) : (
+            <HiOutlineListBullet className="text-primary text-2xl" />
+          )}
+        </button>
+      )}
 
       {isAutenticated && (
         <>
