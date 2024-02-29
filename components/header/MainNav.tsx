@@ -17,11 +17,11 @@ function MainNav() {
       <li onClick={toggleDisplayNavbar}>
         <Link
           className={`${
-            path === "/" ? "text-primary bg-accent/50" : ""
+            path.startsWith("/goal") ? "text-primary bg-accent/50" : ""
           }  px-4 py-2 rounded-md transition-all duration-300`}
-          href="/"
+          href="/goal"
         >
-          Home
+          Goals
         </Link>
       </li>
 
